@@ -40,55 +40,49 @@ the `lab.scarv.org` specification (i.e., overarching documentation).*
 
 ## Quickstart
 
-- The
-  [releases](https://github.com/scarv/lab-spec/releases)
-  page houses pre-built content.
+1. Install any associated pre-requisites, e.g.,
 
-- You can build the content yourself: 
+   - a modern 
+     [LaTeX](https://www.latex-project.org)
+     distributation,
+     such as
+     [TeX Live](https://www.tug.org/texlive),
+     including any required packages.
 
-  1. Install any associated pre-requisites, e.g.,
+2. Execute
 
-     - a modern 
-       [LaTeX](https://www.latex-project.org)
-       distributation,
-       such as
-       [TeX Live](https://www.tug.org/texlive),
-       including any required packages.
+   ```sh
+   git clone https://github.com/scarv/lab-spec.git
+   cd ./lab-spec
+   git submodule update --init --recursive
+   source ./bin/conf.sh
+   ```
 
-  2. Execute
+   to clone and initialise the repository,
+   then configure the environment;
+   for example, you should find that the environment variable
+   `REPO_HOME`
+   is set appropriately.
+
+3. Use targets in the top-level `Makefile` to drive a set of
+   common tasks, e.g.,
+
+   - execute
 
      ```sh
-     git clone https://github.com/scarv/lab-spec.git
-     cd ./lab-spec
-     git submodule update --init --recursive
-     source ./bin/conf.sh
+     make doc
      ```
 
-     to clone and initialise the repository,
-     then configure the environment;
-     for example, you should find that the environment variable
-     `REPO_HOME`
-     is set appropriately.
+     to build the documentation,
 
-  3. Use targets in the top-level `Makefile` to drive a set of
-     common tasks, e.g.,
+   - execute
 
-     - execute
+     ```sh
+     make clean
+     ```
 
-       ```sh
-       make doc
-       ```
-
-       to build the documentation,
-
-     - execute
-
-       ```sh
-       make clean
-       ```
-
-       to clean-up
-       (e.g., remove everything built in `${REPO_HOME}/build`).
+     to clean-up
+     (e.g., remove everything built in `${REPO_HOME}/build`).
 
 <!--- -------------------------------------------------------------------- --->
 
