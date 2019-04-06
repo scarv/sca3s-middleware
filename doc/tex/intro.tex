@@ -1,140 +1,84 @@
 % =============================================================================
 
-%Whether selecting new or codifying existing technologies, the development
-%of cryptographic standards is an important challenge.  While traditional,
-%written standards are one element of this challenge, the development of 
-%de facto standard implementations are another: such software components 
-%form concrete, ubiquitous realisations of theory that fill critical, and
-%long-lived roles.
-%
-%Within this context, open contests have emerged as an important approach 
-%(or component thereof); allowing open analysis and debate, they typically 
-%enhance the quality of and trust in the eventual outcome.  Initiated in
-%1997 and concluding in 2000, the AES process run by NIST is an exemplar
-%in the sense it encompassed both elements outlined above: "hardware and 
-%software suitability" was an stated evaluation criteria for new designs, 
-%but the process also begat de facto implementations that are still now in
-%wide use.  
-%
-%To some extent, the same argument is true in more applied fields such as
-%that of side-channel attacks [1] (a branch of cryptographic engineering).
-%For example, iterations of the DPA contest [2] challenge participants to 
-%mount an efficient attack against a target implementation (based on use
-%of pre-acquired data sets).  However, the open contest model implemented 
-%by the DPA contest exhibits some arguable disadvantages.  In particular, 
-%it is
-%
-%a) somewhat uni-directional, in the sense it has predominantly been used 
-%   as a resource for comparing and refining attack techniques rather than
-%   secure implementations, and
-%b) somewhat non-continuous: there is typically a contest outcome, with no
-%   interaction or iteration possible.
-%
-%We posit that a build-it, break-it, fix-it [4] style contest model, if it
-%were possible, would resolve such disadvantages: the problem, and hence 
-%crux of this proposal, is the lack of a suitable platform to operate such 
-%a model within this context.
-%
-%[1] http://en.wikipedia.org/wiki/Side-channel_attack
-%[2] http://www.dpacontest.org
-%[3] http://ches.iacr.org
-%[4] http://builditbreakit.org
+\paragraph{xxx}
 
-% =============================================================================
+Among documents associated with the so-called Snowden revelations, the NSA 
+exploit catalogue is arguably the most concrete and illuminating.  Analysis
+of the content has led many commentators to remark on a lack of traditional
+cryptanalytic breakthroughs.  Put simply, and although interpreting various
+aspects at face value, the implication is that modern cryptography indeed
+offers the security margins expected.  The state of end-point security is, 
+however, {\em significantly} less positive in that similar security margins
+are either degraded or rendered moot by deficiencies in the implementation 
+of hardware, software, or a combination of both.  The increased emphasis on
+end-to-end security, while sane, makes this particularly problematic: the
+end-points, where security-critical storage and computation are paramount,
+also seem demonstrably {\em in}secure.
 
-%Whether selecting new or codifying existing technologies, the development
-%of cryptographic standards is a fundamentally important challenge.  Only 
-%somewhat orthogonal to the development of {\em written} standards, is the 
-%development of de facto standard {\em implementations}: these software 
-%components form concrete, ubiquitous realisations of theory that fill 
-%critical, long-lived roles.
-%In both cases, open contests have emerged as an important approach (or a
-%component thereof); by allowing open analysis and debate, they typically 
-%enhance the quality of and trust in the eventual outcome.  Initiated in
-%$1997$ and concluding in $2000$, the AES process~\cite{aescontest} run by
-%NIST is an obvious exemplar.  In fact, it encompassed elements of both
-%cases above:
-%not only was ``hardware and software suitability'' an explicit evaluation
-%criteria for the new block cipher design, but the process begat various de 
-%facto implementations that are still in wide usage.  To a lesser extent, a 
-%similar situation is true of side-channel attacks.  For example, iterations 
-%of the DPA contest~\cite{dpacontest} challenge participants to mount an
-%efficient attack against a fixed target (using a set of pre-acquired 
-%traces); this has predominantly been used compare and refine attack 
-%techniques.
-%
-%At a high-level, this work package will address arguable disadvantages in
-%the open contest model, by delivering a platform for
-%a) continuous (vs. one contest outcome),
-%   and
-%b) personal   (i.e., by a developer vs. research or evaluation lab.)
-%evaluation; we posit this will provide a platform for innovation beyond
-%the project itself, so improving the quality of de facto implementations 
-%of cryptography in the medium- to long-term.
-%
-%\begin{enumerate}[leftmargin=0pt,itemindent=!,labelsep=!,labelwidth=!,labelindent=0pt,align=left,label={{\bf \WP{C}[{\arabic*}]:}}]
-%
-%\item Continuous integration is a development best-practice, whose core
-%      tenet is that source code be regularly (e.g., several times a day) 
-%      integrated into a central repository, and subjected to a suite of 
-%      automated build and verification processes; one advantage of doing
-%      so is the early identification of defects or incompatibilities.
-%      The concept of continuous {\em evaluation} fits a similar model, 
-%      but is motivated by identifying security defects: specifically, we
-%      are concerned with instances of side-channel leakage.  A range of
-%      challenges exist wrt. deploying such an approach, namely access 
-%      to suitable 
-%      a) acquisition equipment to produce a data set,
-%         and
-%      b) attack implementations (cf. unit tests) to verify (non-)leakage
-%         in said data set.
-%      With an emphasis on power- and EM-based leakage, we will
-%
-%      \begin{compactitem}[$\bullet~$]
-%      \item deliver a hardware-oriented,
-%            personal acquisition platform for RISC-V,
-%      \item deliver a software-oriented (i.e., simulation-based, per ELMO~\cite{elmo})
-%            alternative to the above,
-%      \item explore how such platforms can be integrated into developer
-%            workflow, and what benefits result.
-%      \end{compactitem}
-%
-%\item An obvious motivation for the previous task is the level of capital
-%      investment required to support a high(er)-end alternative.  However,
-%      even a low(er)-end, personal platform could be prohibitive in some 
-%      cases.  In this task, we will, with the same motivation, deliver a
-%      {\em remote} and hence ``lab. free'' evaluation platform; this can
-%      be viewed as capitalising on the business model exemplified by ARM 
-%      mbed, whereby development tool-chains are hosted and executed on a 
-%      cloud-based platform.  In short, we will
-%
-%      \begin{compactitem}[$\bullet~$]
-%      \item develop (e.g., programming API and data formats, submission, 
-%            queuing) back-end infrastructure for {\em shared} use of a 
-%            (personal) acquisition platform,
-%      \item integrate this with a front-end (e.g., based on Eclipse) that,
-%            in combination, allows remote development {\em and} evaluation 
-%            of candidate implementations,
-%      \item expose the result as a (prototype, and hence likely limited
-%            access) web-based service.
-%      \end{compactitem}
-%
-%\item This task will make use of the previous infrastructure within a 
-%      ``build-it, break-it, fix-it''~\cite{builtit} style process whose
-%      focus is improving the state-of-the-art in de facto cryptographic
-%      implementations: the overarching aim will be delivery of drop-in 
-%      implementations of primitives for use in contexts that demand 
-%      resistance against side-channel attack.
-%      We stress that
-%      a) the single, accessible platform,
-%         coupled with
-%      b) the ability to use it continuously, so engage in an iterative
-%         (and adversarial, i.e., ``gamified'' {\em co}-development of 
-%         implementations and attacks against them) contest 
-%      are crucial, for example testing and evaluating the proposal 
-%      (e.g., \WP{C}[1] and \WP{C}[2], {\em and} \WP{A} and \WP{B}) 
-%      as a by-product.
-%
-%\end{enumerate}
+A recurring exemplar is the potential for implementation attacks against a
+given target; the mechanism used to mount such an attack will intrinsically
+depend on the concrete implementation, and hence behaviour of said target,
+vs. an abstract specification for example.
+The importance of implementation attacks can be motivated by observing that
+an given attacker might not behave as they {\em should} (i.e., as expected)
+but however they {\em can}.  To render ineffective the security afforded by
+some encryption scheme, for example, they might target
+a) the concrete, in practice implementation
+   {\em or}
+b) the abstract, on paper    specification
+of said scheme.  Typically, they will select the option for which they can
+succeed most easily (colloquially, the weakest link).  If security of the
+scheme is (provably) related to some hard Mathematical problem, traditional
+cryptanalysis is unlikely to be easy at all.  Opting for an implementation
+attack, however, offers the potential to bypass the associated difficulty:
+the hard problem might be rendered moot if the attack instead focuses on a
+feature (e.g., flaw) in the implementation of it.
+
+% -----------------------------------------------------------------------------
+
+\paragraph{xxx}
+
+Over the last $5$ years, (at least) two technology trends have acted to
+exacerbate the resulting threat, and hence importance of this field.
+First, the potential for application at scale will typically amplify the 
+threat of {\em any} attack type.  Contemporary scenarios include when the 
+attack is mounted remotely via a network (e.g., targeting a web-server), 
+{\em or} where a large number of similarly viable targets exist (e.g., 
+massive deployment of some embedded devices such as a smart-phone, or IoT
+device).  
+Second, the ability to consider traditional (especially EM-based) methods
+of acquiring exploitable side-channel leakage has improved significantly
+over the last few years (per the ``attacks only get better'' principle).  
+Among selected examples, the last $2$ years have seen attacks on
+System-on-Chip (SoC) components~\cite{complex1}, 
+smart-phones~\cite{complex2},
+and even
+full-scale personal computers~\cite{complex3} 
+operating at multi-gigahertz clock frequencies.  Again this is important,
+because it further widens the attack surface: it could now be possible to
+harness micro-architectural leakage via forms of acquisition more aligned 
+with embedded targets (e.g., EM).
+
+% -----------------------------------------------------------------------------
+
+\paragraph{xxx}
+
+However, at a high level, a given attack demands (at least) two phases:
+a) acquisition of a data set,
+   then
+b) (crypt)analysis of said data set, which aims to satisfy a goal such as
+   key recovery.
+Particularly where the side-channel in question is
+*analogue* (e.g., power consumption)
+vs.
+ *digital* (e.g., execution time)
+in nature, the acquisition phase can present some significant
+practical challenges.  Examples include
+capital investment wrt. equipment, maintenance and operational experience, and logistics;
+even though low-cost platforms such as
+[ChipWhisperer](https://newae.com/tools/chipwhisperer)
+help to some extent, the concept of
+[Total Cost of Ownership (TCO)](https://en.wikipedia.org/wiki/Total_cost_of_ownership)
+means they can still impact on how applicable the approach is.
 
 % =============================================================================
