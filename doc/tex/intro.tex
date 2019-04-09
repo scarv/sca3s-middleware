@@ -18,14 +18,14 @@ also seem demonstrably {\em in}secure.
 A recurring exemplar is the potential for implementation attacks against a
 given target; the mechanism used to mount such an attack will intrinsically
 depend on the concrete implementation, and hence behaviour of said target,
-vs. an abstract specification for example.
+vs. an abstract design for example.
 The importance of implementation attacks can be motivated by observing that
 an given attacker might not behave as they {\em should} (i.e., as expected)
 but however they {\em can}.  To render ineffective the security afforded by
 some encryption scheme, for example, they might target
 a) the concrete, in practice implementation
    {\em or}
-b) the abstract, on paper    specification
+b) the abstract, on paper    design
 of said scheme.  Typically, they will select the option for which they can
 succeed most easily (colloquially, the weakest link).  If security of the
 scheme is (provably) related to some hard Mathematical problem, traditional
@@ -34,47 +34,79 @@ attack, however, offers the potential to bypass the associated difficulty:
 the hard problem might be rendered moot if the attack instead focuses on a
 feature (e.g., flaw) in the implementation of it.
 
+In addition to the relative ineffectiveness of cryptanalysis against modern
+cryptographic designs, a variety of trends illustrate why concrete attacks
+based on this concept are such a threat; a non-exhaustive set of examples
+follows.
+
+\begin{enumerate}
+
+\item There has been an obvious societal shift toward demand for, and even
+      dependency on digital information systems; such systems often process
+      security- and identity-related data, while also operating within an
+      adversarial environment.
+
+\item There is often significant potential for application at scale, which
+      typically amplifies the potency of attacks.  Examples include where
+      a) increased connectivity permits attacks to be mounted remotely via
+         a network (e.g., targeting a web-server),
+         or
+      b) a large number of similarly viable targets exist (e.g., massive
+         deployment of some embedded devices such as a smart-phone, or IoT
+         device).
+
+\item In   theory,
+      increased complexity   of      such targets
+      offers an intuitive deterrent against attack;
+      contact-based side-channels related to power consumption {\em may} be
+      rendered infeasible by electronic or architectural complexity.
+      In practice,
+      however, the ``attacks only get better'' principle is evident: use of
+      contact-less side-channels, such as EM, have been harnessed against
+      System-on-Chip (SoC) components, 
+      smart-phones,
+      and even
+      full-scale personal computers
+      operating at multi-gigahertz clock frequencies.
+
+\end{enumerate}
+
 % -----------------------------------------------------------------------------
 
 \paragraph{xxx}
 
-Over the last $5$ years, (at least) two technology trends have acted to
-exacerbate the resulting threat, and hence importance of this field.
-First, the potential for application at scale will typically amplify the 
-threat of {\em any} attack type.  Contemporary scenarios include when the 
-attack is mounted remotely via a network (e.g., targeting a web-server), 
-{\em or} where a large number of similarly viable targets exist (e.g., 
-massive deployment of some embedded devices such as a smart-phone, or IoT
-device).  
-Second, the ability to consider traditional (especially EM-based) methods
-of acquiring exploitable side-channel leakage has improved significantly
-over the last few years (per the ``attacks only get better'' principle).  
-Among selected examples, the last $2$ years have seen attacks on
-System-on-Chip (SoC) components~\cite{complex1}, 
-smart-phones~\cite{complex2},
-and even
-full-scale personal computers~\cite{complex3} 
-operating at multi-gigahertz clock frequencies.  Again this is important,
-because it further widens the attack surface: it could now be possible to
-harness micro-architectural leakage via forms of acquisition more aligned 
-with embedded targets (e.g., EM).
+Within an attack landscape of increasing breadth and complexity, it has been
+suggested that treating security as a first-class goal is
+a) {\em necessary},
+   and thus
+b) the {\em duty} of hardware security Engineers.
+Along such lines, robust mitigation of side-channel attacks is, on one hand,
+supported by a rich, mature corpus of literature; mitigation techniques (or
+countermeasures) are increasingly well understood.  On the other hand, the
+concrete vs. abstract nature of side-channel attacks fundamentally dictates
+challenges wrt. selecting, instrumenting, and assessing the efficacy of such
+mitigations.
 
-% -----------------------------------------------------------------------------
-
-\paragraph{xxx}
-
-However, at a high level, a given attack demands (at least) two phases:
+At a high level, a given side-channel attack demands (at least) two phases:
 a) acquisition of a data set,
    then
 b) (crypt)analysis of said data set, which aims to satisfy a goal such as
-   key recovery.
+   (generic) leakage assessment, or (specific) key recovery.
+
+Understanding attacks and associated mitigations demands 
+
 Particularly where the side-channel in question is
-*analogue* (e.g., power consumption)
+analogue (e.g., power consumption)
 vs.
- *digital* (e.g., execution time)
-in nature, the acquisition phase can present some significant
-practical challenges.  Examples include
+ digital (e.g., execution time)
+in nature, the first phase constitutes a challenge that can lli
+
+
+Examples include
 capital investment wrt. equipment, maintenance and operational experience, and logistics;
+
+
+
 even though low-cost platforms such as
 [ChipWhisperer](https://newae.com/tools/chipwhisperer)
 help to some extent, the concept of
