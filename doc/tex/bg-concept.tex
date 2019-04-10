@@ -1,14 +1,11 @@
-%\item The term {\em device} is a used as a catch-all to describe the 
-%      hardware platform on
-%      which the target implementations are executed.
-%\item A target implementation is formed by combining two components, namely
-%      a {\em driver} and a {\em kernel}; when executed on the device, the former 
-%    offers a uniform communication interface via which the latter is used.
+% =============================================================================
 
-%<!-- ====================================================================== -->
-%
-%# Background
-%
+\subsection{Concepts and terminology}
+
+% -----------------------------------------------------------------------------
+
+\subsubsection{The {\em existing} model: side-channel analysis ``in the lab.'' }
+
 %- Focusing on power- and EM-based side-channel attacks, the process of
 %  acquiring a trace of execution behaviour will typically involve the
 %  following components:
@@ -80,9 +77,18 @@
 %- Once a set of some number of traces (a trace set) has been acquired, 
 %  the next step is to apply one or more *attack implementations* so as
 %  to recover a security-critical target value(s).
-%
-%<!-- ====================================================================== -->
-%
+
+% -----------------------------------------------------------------------------
+
+\subsubsection{The {\em proposed} model: side-channel analysis ``as a service''}
+
+%\item The term {\em device} is a used as a catch-all to describe the 
+%      hardware platform on
+%      which the target implementations are executed.
+%\item A target implementation is formed by combining two components, namely
+%      a {\em driver} and a {\em kernel}; when executed on the device, the former 
+%    offers a uniform communication interface via which the latter is used.
+
 %# Step #1: stand-alone acquisition infrastructure
 %
 %- At this stage the idea is to support a use-case focused on acquisition
@@ -194,144 +200,5 @@
 %     acquisition data set,
 %     to the 
 %     acquisition job URL.
-%
-%<!-- ====================================================================== -->
-%
-%# Step #2: stand-alone attack      infrastructure
-%
-%- At this stage the idea is to support a use-case focused on use of the
-%  results from a previous acquisition, i.e., a stored acquisition data
-%  set, through execution of an *attack implementation*.
-%  The user in this use-case would interact with a EC2 *front-end server* 
-%  via either
-%
-%  - a web-based interface,
-%  - a command-line interface (likely an AWS-like wrapper around the
-%    web-based interface)
-%
-%  to submit an 
-%  *attack job manifest* 
-%  serviced by an
-%  EC2-instance, which we term the *attack appliance*, using
-%  an acquisition data set (stored in an S3 bucket) as input;
-%  the 
-%  *attack data set*, 
-%  i.e., output from the 
-%  attack process,
-%  is transferred to an S3 bucket.
-%
-%- One could imagine either
-%
-%  - creating attack appliance instances on demand (suggesting use of AWS 
-%    Lambda),
-%    or
-%  - maintaining a pool of such instances, each of which pulls attack job
-%    manifests from a single queue.
-%
-%- An
-%  attack job manifest
-%  must include fields that capture:
-%
-%  - an attack implementation ID (or type), 
-%    e.g., block cipher,
-%  - an attack implementation URL, 
-%    namely a git URL of a repository that contains it,
-%  - an acquisition job URL,
-%    i.e., the acquisition data set against which to execute the attack.
-%
-%- Most of the notes about acquisition job manifests also apply to attack
-%  job manifests, e.g., wrt. *attack job IDs* and *attack job URLs*. 
-%
-%- The 
-%  attack implementation 
-%  must conform to an API associated with the stated type.
-%  When built by the 
-%  attack appliance, 
-%  it will be linked against a
-%  (public) 
-%  *attack library*: 
-%  this wraps the 
-%  attack implementation 
-%  in a harness to make it suitable for use.
-%
-%- The 
-%  acquisition appliance 
-%  follows roughly these steps:
-%
-%  1. check whether the 
-%     attack data set 
-%     already exists, and act appropriately,
-%  2. clone the 
-%     attack implementation 
-%     repository into local storage,
-%  3. build the 
-%     attack implementation 
-%     against the 
-%     attack library,
-%  4. execute the 
-%     attack implementation,
-%     using local storage for the temporary output and streaming the input
-%     from stated acquisition job URL (i.e., from the S3 bucket),
-%  5. transfer said output, namely the
-%
-%     - attack job manifest,
-%     - (archived) attack implementation repository,
-%     - attack results,
-%     - log of the whole process,
-%
-%     which constitutes an
-%     attack data set,
-%     to the 
-%     attack job URL.
-%
-%<!-- ====================================================================== -->
-%
-%# Step #3: use-cases and embellishments
-%
-%## Full-on integration: in-cloud development, acquisition, and attack
-%
-%The idea here would essentially be to bring the development of target and
-%attack implementations into the infrastructure, by using an in-cloud IDE.
-%To make direct use of the existing acquisition and attack infrastructure,
-%the idea would likely be to interface said IDE with git repositories that
-%are backed by S3-based storage: as such, the same infrastructure simply
-%uses an internal vs. external target or attack implementation URL.
-%
-%## Applications layered on top of infrastructure
-%
-%Once developed, the infrastructure can be used as a stand-alone resource
-%or support more specific, tailored use-cases: examples include
-%
-%- (controlled) exposure of the S3 bucket to support a database of trace
-%  sets as open access resources,
-%- hosting of CTF-like or "build-it, break-it, fix-it" competitions.
-%
-%In a sense, both could be viewed as web-applications that are layered on
-%top of the infrastructure; they essentially just manage or present data 
-%that is already available in specific ways.
-%
-%<!-- ====================================================================== -->
-%
-%# General notes
-%
-%- There clearly needs to be some element of user account management, but 
-%  this can initially be very lightweight.
-%
-%- There is a clear danger in that a user can execute somewhat arbitrary,
-%  albeit API conformant programs on a target device or attack appliance.
-%  One could imagine several approaches to this problem:
-%
-%  - Ignore it: if users are vetted somehow (or even paying for service),
-%    then, provided some effort wrt. sandboxing etc. is in place, there
-%    is no real issue.
-%  - Put a human in the loop: introduce a second layer of queue to allow
-%    some form of manual vetting of acquisition or attack job manifests.
-%    Even if this is viable, it is not clear how effective it would be
-%    vs. determined malicious use.
-%
-%- As a starting point, conservative defaults seem sensible; for example,
-%  putting an small(ish) upper bound on the number of traces acquires is
-%  reasonable to conserve storage space and thus reduce cost.  For a paid
-%  served, such defaults can be removed and absorbed into the cost model.
-%
-%<!-- ====================================================================== -->
+
+% =============================================================================
