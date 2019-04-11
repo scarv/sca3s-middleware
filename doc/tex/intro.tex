@@ -1,6 +1,6 @@
 % =============================================================================
 
-\paragraph{xxx}
+\paragraph{Implementation attacks}
 
 Among documents associated with the so-called Snowden revelations, the NSA 
 exploit catalogue is arguably the most concrete and illuminating.  Analysis
@@ -34,9 +34,31 @@ attack, however, offers the potential to bypass the associated difficulty:
 the hard problem might be rendered moot if the attack instead focuses on a
 feature (e.g., flaw) in the implementation of it.
 
+% -----------------------------------------------------------------------------
+
+\paragraph{Side-channel   attacks}
+
+% TODO: def. side-channel attack
+
+Viewed at a high level, a given side-channel attack involves two processes:
+a) an acquisition    process, 
+   where interaction with the target device yields an associated data set,
+   then
+b) a (crypt)analysis process,
+   where data set is used satisfy a goal such as 
+    (generic) leakage assessment
+   or 
+   (specific) key recovery.
+
+% -----------------------------------------------------------------------------
+
+\paragraph{Approaches to mitigation}
+
+% TODO
+
 In addition to the relative ineffectiveness of cryptanalysis against modern
 cryptographic designs, a variety of trends illustrate why concrete attacks
-based on this concept are such a threat; a non-exhaustive set of examples
+based on these concepts are such a threat; a non-exhaustive set of examples
 follows.
 
 \begin{enumerate}
@@ -71,15 +93,12 @@ follows.
 
 \end{enumerate}
 
-% -----------------------------------------------------------------------------
-
-\paragraph{xxx}
-
-Within an attack landscape of increasing breadth and complexity, it has been
-suggested that treating security as a first-class goal is
+\noindent
+As a result, it has been suggested that treating side-channels security as a first-class goal is
 a) {\em necessary},
    and thus
 b) the {\em duty} of hardware security Engineers.
+
 Along such lines, robust mitigation of side-channel attacks is, on one hand,
 supported by a rich, mature corpus of literature; mitigation techniques (or
 countermeasures) are increasingly well understood.  On the other hand, the
@@ -87,16 +106,6 @@ concrete vs. abstract nature of side-channel attacks fundamentally dictates
 challenges wrt. selecting, instrumenting, and assessing the efficacy of such
 mitigations.
 
-Viewed at a high level, a given side-channel attack involves (at least) two 
-processes:
-a) an acquisition    process, 
-   where interaction with the target device yields an associated data set,
-   then
-b) a (crypt)analysis process,
-   where data set is used satisfy a goal such as 
-    (generic) leakage assessment
-   or 
-   (specific) key recovery.
 
 %Understanding attacks and associated mitigations demands 
 %
@@ -118,5 +127,11 @@ b) a (crypt)analysis process,
 
  minimise total cost of ownership
 and hence maximise return on investment.
+
+% -----------------------------------------------------------------------------
+
+\paragraph{\LABID: side-channel analysis ``as a service''}
+
+% TODO
 
 % =============================================================================
