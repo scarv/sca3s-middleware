@@ -38,23 +38,63 @@ feature (e.g., flaw) in the implementation of it.
 
 \paragraph{Side-channel   attacks}
 
-% TODO: def. side-channel attack
+At a high level, implementation attacks fall into two sub-classes:
 
-Viewed at a high level, a given side-channel attack involves two processes:
-a) an acquisition    process, 
-   where interaction with the target device yields an associated data set,
+\begin{enumerate}
+\item An active  attack
+      is st. the attacker influences behaviour of the target;
+      they leverage direct inputs and outputs plus (optionally) indirect  input,
+      and are typically described as 
+      fault
+      attacks.
+\item A  passive attack
+      is st. the attacker   observes behaviour of the target;
+      they leverage direct inputs and outputs plus (optionally) indirect output,
+      and are typically described as 
+      side-channel (or information leakage)
+      attacks.
+\end{enumerate}
+
+\noindent
+In the case of passive attacks, a given indirect output is referred to as
+a (or the) side-channel; said channel will act as a mechanism though which
+information leaks.  Although variants can make sense, typical side-channel
+attacks will involve two phases in some form:
+a) an acquisition    phase, 
+   where interaction with the attack target yields an associated data set
+   through observation of associated behaviour,
    then
-b) a (crypt)analysis process,
+b) a (crypt)analysis phase,
    where data set is used satisfy a goal such as 
     (generic) leakage assessment
    or 
    (specific) key recovery.
+As a motivating example, consider a power-based side-channel attack against
+a CMOS-based attack target.  Each interaction with the attack target would
+yield a trace of power consumption, i.e., a sequence of samples
+\[
+T = \LIST{ T_0, T_1, \ldots, T_{n-1} } ,
+\]
+which will be
+{\em design}-dependent
+(e.g., dependent on the number, type, and connection between transistors)
+plus
+{\em  data}-dependent
+(i.e., change based on switching activity of said transistors);
+the acquisition phase yields a set of such traces, each of which includes
+a signal (i.e., data of interest) plus noise, while the analysis phase is
+tasked with using that data set to satisfy the attack goal.
+
+Evolution of the state-of-the-art wrt. such phases are often described as
+symbiotic, and clearly {\em both} are integral to a concrete attack.  For
+example, an acquired data set with no means to cryptanalytically exploit
+it is somewhat redundant; likewise, improvement to the acquisition phase
+may be able to support more effective cryptanalysis (e.g., as a result of
+higher SNR).
 
 % -----------------------------------------------------------------------------
 
 \paragraph{Approaches to mitigation}
-
-% TODO
 
 In addition to the relative ineffectiveness of cryptanalysis against modern
 cryptographic designs, a variety of trends illustrate why concrete attacks
@@ -93,8 +133,11 @@ follows.
 
 \end{enumerate}
 
+% TODO
+
 \noindent
-As a result, it has been suggested that treating side-channels security as a first-class goal is
+As a result, it has been suggested that treating side-channels security as a
+first-class goal is
 a) {\em necessary},
    and thus
 b) the {\em duty} of hardware security Engineers.
