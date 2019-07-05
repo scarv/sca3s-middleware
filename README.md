@@ -1,27 +1,27 @@
-# [`lab.scarv.org`](https://github.com/scarv/lab.scarv.org): specification
+# [SCA3S](https://github.com/scarv/sca3s): specification
 
 <!--- -------------------------------------------------------------------- --->
 
-[![Build Status](https://travis-ci.com/scarv/lab-spec.svg)](https://travis-ci.com/scarv/lab-spec)
-[![Documentation](https://codedocs.xyz/scarv/lab-spec.svg)](https://codedocs.xyz/scarv/lab-spec)
+[![Build Status](https://travis-ci.com/scarv/sca3s-spec.svg)](https://travis-ci.com/scarv/sca3s-spec)
+[![Documentation](https://codedocs.xyz/scarv/sca3s-spec.svg)](https://codedocs.xyz/scarv/sca3s-spec)
 
 <!--- -------------------------------------------------------------------- --->
 
 *Acting as a component part of the
 [SCARV](https://www.scarv.org)
 project,
-`lab.scarv.org` is a collection of resources that support the
-development and analysis of cryptographic implementations wrt.
+SCA3S is a collection of resources that support the development 
+and analysis of cryptographic implementations wrt.
 [side-channel attack](https://en.wikipedia.org/wiki/Side-channel_attack):
 it places particular emphasis on analogue side-channels (e.g.,
 power and EM) stemming from
 [RISC-V](https://riscv.org)-based
 platforms.
 The main
-[repository](https://github.com/scarv/lab.scarv.org)
+[repository](https://github.com/scarv/sca3s)
 acts as a general container for associated resources;
 this specific submodule houses
-the `lab.scarv.org` specification (i.e., overarching documentation).*
+the overarching specification and documentation.*
 
 <!--- -------------------------------------------------------------------- --->
 
@@ -52,8 +52,8 @@ the `lab.scarv.org` specification (i.e., overarching documentation).*
 2. Execute
 
    ```sh
-   git clone https://github.com/scarv/lab-spec.git
-   cd ./lab-spec
+   git clone https://github.com/scarv/sca3s-spec.git
+   cd ./sca3s-spec
    git submodule update --init --recursive
    source ./bin/conf.sh
    ```
