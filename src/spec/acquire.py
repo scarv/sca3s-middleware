@@ -6,7 +6,7 @@
 
 import json, jsonschema
 
-SCHEMA_JOB = {
+SCHEMA = {
   'definitions' : {
      'trace-spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
            'period-id'   : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'auto', 'interval', 'frequency', 'duration' ] },
