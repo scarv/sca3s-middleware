@@ -12,13 +12,13 @@ import json, jsonschema
 #
 # [1] https://python-jsonschema.readthedocs.io
 
-def validate( conf, schema ) :
+def validate( instance, schema ) :
   def defaults( validator_class ) :
     validate_properties = validator_class.VALIDATORS[ 'properties' ]
 
-    def set_defaults( validator, properties, instance, schema ):
+    def set_defaults( validator, properties, instance, schema ) :
       for ( property, subschema ) in properties.items() :
-	if ( 'default' in subschema ) :
+        if ( 'default' in subschema ) :
           instance.setdefault( property, subschema[ 'default' ] )
 
       for error in validate_properties( validator, properties, instance, schema ):
@@ -26,4 +26,4 @@ def validate( conf, schema ) :
 
     return jsonschema.validators.extend( validator_class, { 'properties' : set_defaults } )
 
-  validator = defaults( jsonschema.Draft6Validator ) ; validator( schema ).validate( conf )
+  validator = defaults( jsonschema.Draft7Validator ) ; validator( schema ).validate( instance )
