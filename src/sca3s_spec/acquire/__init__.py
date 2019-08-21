@@ -4,8 +4,6 @@
 # can be found at https://opensource.org/licenses/MIT (or should be included 
 # as LICENSE.txt within the associated archive or repository).
 
-__all__ = [ 'acquire', 'analyse', 'share' ]
+__all__ = [ 'schema' ]
 
-from . import acquire
-from . import analyse
-from . import share
+from . import schema
