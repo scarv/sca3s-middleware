@@ -15,8 +15,6 @@ SCHEMA_MANIFEST = {
        'resolution-spec' : { 'type' :  'number', 'default' :      0                                                           },
    
        'count'           : { 'type' :  'number', 'default' :      1                                                           },
-       'format'          : { 'type' :  'string', 'default' :  'pkl', 'enum' : [ 'pkl', 'csv', 'trs'                         ] },
-
        'compress'        : { 'type' : 'boolean', 'default' :   True                                                           },
        'crop'            : { 'type' : 'boolean', 'default' :   True                                                           }
     }, 'required' : [] }
