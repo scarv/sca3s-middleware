@@ -6,6 +6,6 @@
 
 import json, jsonschema
 
-MANIFEST = {
+SCHEMA_MANIFEST = {
 
 }

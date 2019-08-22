@@ -6,7 +6,7 @@
 
 import json, jsonschema
 
-MANIFEST = {
+SCHEMA_MANIFEST = {
   'definitions' : {
      'trace-spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
            'period-id'   : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'auto', 'interval', 'frequency', 'duration' ] },
