@@ -15,7 +15,6 @@ SCHEMA_MANIFEST = {
        'resolution-spec' : { 'type' :  'number', 'default' :      0                                                           },
    
        'count'           : { 'type' :  'number', 'default' :      1                                                           },
-       'compress'        : { 'type' : 'boolean', 'default' :   True                                                           },
        'crop'            : { 'type' : 'boolean', 'default' :   True                                                           }
     }, 'required' : [] }
   },
