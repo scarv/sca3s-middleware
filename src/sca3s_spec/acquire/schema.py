@@ -131,9 +131,7 @@ SCHEMA_MANIFEST = {
             'identity_id'             : { 'type' :     'string'                                 },
   
               'region-id'             : { 'type' :     'string', 'default' : 'eu-west-1'        },
-              'bucket-id'             : { 'type' :     'string', 'default' : 'scarv-lab-traces' },
-  
-            'verify'                  : { 'type' :    'boolean', 'default' : True               }
+              'bucket-id'             : { 'type' :     'string', 'default' : 'scarv-lab-traces' }
         }, 'required' : [] }
       }
     } ] }
