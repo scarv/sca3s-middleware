@@ -8,6 +8,8 @@ ifndef REPO_HOME
   $(error "execute 'source ./bin/conf.sh' to configure environment")
 endif
 
+# =============================================================================
+
 .PHONY: doc
 
 doc       :
@@ -16,9 +18,9 @@ doc       :
 doc-clean : 
 	@${MAKE} -C ${REPO_HOME}/doc clean
 
-all      : doc
+all   : doc
 
-clean    : doc-clean
+clean : doc-clean
+	@rm --force --recursive ${REPO_HOME}/build/*
 
-spotless :
-	@rm -rf ${REPO_HOME}/build/*
+# =============================================================================
