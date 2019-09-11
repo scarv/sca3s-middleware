@@ -72,10 +72,9 @@ SCHEMA_MANIFEST = {
                    'connect-id'      : { 'type' : 'string' },
                    'connect-timeout' : { 'type' : 'number' },
   
-                   'program-mode'    : { 'enum' : [ 'usb', 'jlink' ] },
                    'program-id'      : { 'type' : 'string' },
                    'program-timeout' : { 'type' : 'number' }
-        }, 'required' : [ 'connect-id', 'connect-timeout', 'program-mode', 'program-id', 'program-timeout' ] }
+        }, 'required' : [ 'connect-id', 'connect-timeout', 'program-id', 'program-timeout' ] }
       }
     } ] }, { 
     'oneOf' : [ { # options:  scope-spec
