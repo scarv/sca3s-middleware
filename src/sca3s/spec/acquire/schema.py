@@ -8,15 +8,19 @@ import json, jsonschema
 
 SCHEMA_MANIFEST = {
   'definitions' : {
+    'driver-spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
+      'policy'          : { 'type' :  'string', 'default' : 'custom', 'enum' : [ 'custom', 'tvla' ]                            },
+      'verify'          : { 'type' : 'boolean', 'default' :    True                                                            }
+    }, 'required' : [] },
      'trace-spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
-       'resolution-id'   : { 'type' : 'string', 'default' :  'max', 'enum' : [  'bit', 'min', 'max' ]                        },
-       'resolution-spec' : { 'type' : 'number', 'default' :      8                                                           },
+      'resolution-id'   : { 'type' :  'string', 'default' :    'max', 'enum' : [  'bit', 'min', 'max' ]                        },
+      'resolution-spec' : { 'type' :  'number', 'default' :        8                                                           },
 
-           'period-id'   : { 'type' : 'string', 'default' : 'auto', 'enum' : [ 'auto', 'interval', 'frequency', 'duration' ] },
-           'period-spec' : { 'type' : 'number', 'default' :      0                                                           },
+          'period-id'   : { 'type' :  'string', 'default' :   'auto', 'enum' : [ 'auto', 'interval', 'frequency', 'duration' ] },
+          'period-spec' : { 'type' :  'number', 'default' :        0                                                           },
 
-       'type'            : { 'type' : 'string', 'default' : '<f8',  'enum' : [ '<f4', '<f8' ]                                },
-       'count'           : { 'type' : 'number', 'default' :      1                                                           }
+      'type'            : { 'type' :  'string', 'default' :   '<f8',  'enum' : [ '<f4', '<f8' ]                                },
+      'count'           : { 'type' :  'number', 'default' :        1                                                           }
     }, 'required' : [] }
   },
   'type' : 'object', 'default' : {}, 'properties' : {
@@ -39,28 +43,46 @@ SCHEMA_MANIFEST = {
     'oneOf' : [ { # options: driver-spec
       'properties' : {
         'driver-id'   : { 'enum' : [ 'block/enc' ] },
-        'driver-spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
-          'verify' : { 'type' : 'boolean', 'default' : True }
-        } },
+        'driver-spec' : { 
+          'allOf' : [ { '$ref' : '#/definitions/driver-spec' }, { 'properties' : { # extend driver-spec w. driver-specific content options
+            'custom-select' : { 'type' :  'object', 'default' : {}, 'properties' : {
+              'k' : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
+              'm' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
+            }, 'required' : [] },
+            'custom-value'  : { 'type' :  'object', 'default' : {}, 'properties' : {
+              'k' : { 'type' : 'string', 'default' : '{$ * |k|}'                        },
+              'm' : { 'type' : 'string', 'default' : '{$ * |m|}'                        },
+            }, 'required' : [] },
+          } } ]
+        },
          'trace-spec' : { 
-           'allOf' : [ { '$ref' : '#/definitions/trace-spec' }, { 'properties' : { # extend trace-spec w. driver-specific content options
-             'content' : { 'type' :   'array', 'default' : [ 'trace/signal', 'crop/signal', 'm', 'c', 'k' ], 'items' : {
-               'enum' : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'k', 'r', 'm', 'c' ]
-            } },
+          'allOf' : [ { '$ref' : '#/definitions/trace-spec'  }, { 'properties' : { # extend  trace-spec w. driver-specific content options
+            'content' : { 'type' :   'array', 'default' : [ 'trace/signal', 'crop/signal', 'm', 'c', 'k' ], 'items' : {
+              'enum' : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'k', 'r', 'm', 'c' ]
+            } }
           } } ]
         }
-      } 
+      }
     }, {
       'properties' : {
         'driver-id'   : { 'enum' : [ 'block/dec' ] },
-        'driver-spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
-          'verify' : { 'type' : 'boolean', 'default' : True }
-        } },
+        'driver-spec' : { 
+          'allOf' : [ { '$ref' : '#/definitions/driver-spec' }, { 'properties' : { # extend driver-spec w. driver-specific content options
+            'custom-select' : { 'type' :  'object', 'default' : {}, 'properties' : {
+              'k' : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
+              'c' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
+            }, 'required' : [] },
+            'custom-value'  : { 'type' :  'object', 'default' : {}, 'properties' : {
+              'k' : { 'type' : 'string', 'default' : '{$ * |k|}'                        },
+              'c' : { 'type' : 'string', 'default' : '{$ * |c|}'                        },
+            }, 'required' : [] },
+          } } ]
+        },
          'trace-spec' : { 
-           'allOf' : [ { '$ref' : '#/definitions/trace-spec' }, { 'properties' : { # extend trace-spec w. driver-specific content options
+           'allOf' : [ { '$ref' : '#/definitions/trace-spec' }, { 'properties' : { # extend  trace-spec w. driver-specific content options
              'content' : { 'type' :   'array', 'default' : [ 'trace/signal', 'crop/signal', 'c', 'm', 'k' ], 'items' : {
                'enum' : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'k', 'r', 'm', 'c' ]
-            } },
+            } }
           } } ]
         }
       }
