@@ -13,8 +13,8 @@ project,
 SCA3S is a collection of resources that support the development 
 and analysis of cryptographic implementations wrt.
 [side-channel attack](https://en.wikipedia.org/wiki/Side-channel_attack):
-it places particular emphasis on analogue side-channels (e.g.,
-power and EM) stemming from
+mirroring the goals of SCARV, it places particular emphasis on analogue 
+side-channels (e.g., power and EM) stemming from
 [RISC-V](https://riscv.org)-based
 platforms.
 The main
@@ -31,9 +31,15 @@ the overarching specification and documentation.*
 ├── bin                     - scripts (e.g., environment configuration)
 ├── build                   - working directory for build
 ├── doc                     - documentation
-│   └── tex                   - LaTeX content
-└── extern                  - external resources (e.g., submodules)
-    └── texmf                 - submodule: scarv/texmf
+│   └── tex                   - LaTeX content
+├── extern                  - external resources (e.g., submodules)
+│   └── texmf                 - submodule: scarv/texmf
+└── src
+    └── sca3s               - source code for SCA3S
+        └── spec            - source code for SCA3S specification
+            ├── acquire       - acquire-specific functionality
+            ├── analyse       - analyse-specific functionality
+            └── share         - shared           functionality
 ```
 
 <!--- -------------------------------------------------------------------- --->
@@ -88,8 +94,16 @@ the overarching specification and documentation.*
 
 ## Acknowledgements
 
-This work has been supported in part by EPSRC via grant 
-[EP/R012288/1](https://gow.epsrc.ukri.org/NGBOViewGrant.aspx?GrantRef=EP/R012288/1),
-under the [RISE](http://www.ukrise.org) programme.
+This work has been supported in part 
+
+- by EPSRC via grant 
+  [EP/R012288/1](https://gow.epsrc.ukri.org/NGBOViewGrant.aspx?GrantRef=EP/R012288/1)
+  under the 
+  [RISE](https://www.ukrise.org) 
+  programme, 
+  and 
+- by the
+  [AWS Cloud Credits for Research](https://aws.amazon.com/research-credits)
+  programme.
 
 <!--- -------------------------------------------------------------------- --->
