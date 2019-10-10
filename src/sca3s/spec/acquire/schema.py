@@ -91,12 +91,13 @@ SCHEMA_MANIFEST = {
       'properties' : {
          'board-id'   : { 'enum' : [ 'scale/lpc1313fbd48' ] },
          'board-spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
-                   'connect-id'      : { 'type' : 'string' },
-                   'connect-timeout' : { 'type' : 'number' },
+                   'connect-id'      : { 'type' : 'string'           },
+                   'connect-timeout' : { 'type' : 'number'           },
   
-                   'program-id'      : { 'type' : 'string' },
-                   'program-timeout' : { 'type' : 'number' }
-        }, 'required' : [ 'connect-id', 'connect-timeout', 'program-id', 'program-timeout' ] }
+                   'program-id'      : { 'type' : 'string'           },
+                   'program-timeout' : { 'type' : 'number'           },
+                   'program-mode'    : { 'enum' : [ 'usb', 'jlink' ] }
+        }, 'required' : [ 'connect-id', 'connect-timeout', 'program-id', 'program-timeout', 'program-mode' ] }
       }
     } ] }, { 
     'oneOf' : [ { # options:  scope-spec
