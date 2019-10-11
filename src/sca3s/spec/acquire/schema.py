@@ -96,8 +96,11 @@ SCHEMA_MANIFEST = {
   
                    'program-id'      : { 'type' : 'string'           },
                    'program-timeout' : { 'type' : 'number'           },
-                   'program-mode'    : { 'enum' : [ 'usb', 'jlink' ] }
-        }, 'required' : [ 'connect-id', 'connect-timeout', 'program-id', 'program-timeout', 'program-mode' ] }
+                   'program-mode'    : { 'enum' : [ 'usb', 'jlink' ] },
+         }, 'required' : [ 'connect-id', 'connect-timeout', 'program-id', 'program-timeout', 'program-mode' ] }
+         'board-path' : { 'type' :  'array', 'default' : [], 'items' : { 
+           'type' : 'string' 
+         } }
       }
     } ] }, { 
     'oneOf' : [ { # options:  scope-spec
@@ -115,8 +118,11 @@ SCHEMA_MANIFEST = {
             },
            'channel-disable-id'      : { 'type' :  'array', 'default' : [], 'items' : {
              'enum' : [ 'A', 'B' ]
-           } }
-        }, 'required' : [ 'connect-id', 'connect-timeout', 'channel-trigger-id', 'channel-acquire-id' ] }
+           } },
+         }, 'required' : [ 'connect-id', 'connect-timeout', 'channel-trigger-id', 'channel-acquire-id' ] },
+         'scope-path' : { 'type' :  'array', 'default' : [], 'items' : { 
+           'type' : 'string' 
+         } }
       }
     }, {
       'properties' : {
@@ -134,7 +140,10 @@ SCHEMA_MANIFEST = {
            'channel-disable-id'      : { 'type' :  'array', 'default' : [], 'items' : {
              'enum' : [ 'A', 'B', 'C', 'D' ]
            } }
-        }, 'required' : [ 'connect-id', 'connect-timeout', 'channel-trigger-id', 'channel-acquire-id' ] }
+         }, 'required' : [ 'connect-id', 'connect-timeout', 'channel-trigger-id', 'channel-acquire-id' ] },
+         'scope-path' : { 'type' :  'array', 'default' : [], 'items' : { 
+           'type' : 'string' 
+         } }
       }
     } ] }, { 
     'oneOf' : [ { # options:   repo-spec
