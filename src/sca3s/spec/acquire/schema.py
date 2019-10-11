@@ -97,7 +97,7 @@ SCHEMA_MANIFEST = {
                    'program-id'      : { 'type' : 'string'           },
                    'program-timeout' : { 'type' : 'number'           },
                    'program-mode'    : { 'enum' : [ 'usb', 'jlink' ] },
-         }, 'required' : [ 'connect-id', 'connect-timeout', 'program-id', 'program-timeout', 'program-mode' ] }
+         }, 'required' : [ 'connect-id', 'connect-timeout', 'program-id', 'program-timeout', 'program-mode' ] },
          'board-path' : { 'type' :  'array', 'default' : [], 'items' : { 
            'type' : 'string' 
          } }
