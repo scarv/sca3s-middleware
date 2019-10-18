@@ -9,8 +9,8 @@ import json, jsonschema
 SCHEMA_MANIFEST = {
   'definitions' : {
     'driver-spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
-      'policy'          : { 'type' :  'string', 'default' : 'custom', 'enum' : [ 'custom', 'tvla' ]                            },
-      'verify'          : { 'type' : 'boolean', 'default' :    True                                                            }
+      'policy'          : { 'type' :  'string', 'default' : 'custom', 'enum' : [ 'custom', 'tvla-fvr-k', 'tvla-fvr-d', 'tvla-svr-d', 'tvla-rvr-d' ] },
+      'verify'          : { 'type' : 'boolean', 'default' :    True                                                                                 }
     }, 'required' : [] },
      'trace-spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
       'resolution-id'   : { 'type' :  'string', 'default' :    'max', 'enum' : [  'bit', 'min', 'max' ]                        },
@@ -58,7 +58,7 @@ SCHEMA_MANIFEST = {
          'trace-spec' : { 
           'allOf' : [ { '$ref' : '#/definitions/trace-spec'  }, { 'properties' : { # extend  trace-spec w. driver-specific content options
             'content' : { 'type' :   'array', 'default' : [ 'trace/signal', 'crop/signal', 'm', 'c', 'k' ], 'items' : {
-              'enum' : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'k', 'r', 'm', 'c' ]
+              'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'k', 'r', 'm', 'c' ]
             } }
           } } ]
         }
@@ -80,8 +80,8 @@ SCHEMA_MANIFEST = {
         },
          'trace-spec' : { 
            'allOf' : [ { '$ref' : '#/definitions/trace-spec' }, { 'properties' : { # extend  trace-spec w. driver-specific content options
-             'content' : { 'type' :   'array', 'default' : [ 'trace/signal', 'crop/signal', 'c', 'm', 'k' ], 'items' : {
-               'enum' : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'k', 'r', 'm', 'c' ]
+            'content' : { 'type' :   'array', 'default' : [ 'trace/signal', 'crop/signal', 'c', 'm', 'k' ], 'items' : {
+              'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'k', 'r', 'm', 'c' ]
             } }
           } } ]
         }
