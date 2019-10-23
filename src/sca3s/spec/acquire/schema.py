@@ -9,8 +9,7 @@ import json, jsonschema
 SCHEMA_MANIFEST = {
   'definitions' : {
     'driver-spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
-      'policy'          : { 'type' :  'string', 'default' : 'custom', 'enum' : [ 'custom', 'tvla-fvr-k', 'tvla-fvr-d', 'tvla-svr-d', 'tvla-rvr-d' ] },
-      'verify'          : { 'type' : 'boolean', 'default' :    True                                                                                 }
+      'verify'          : { 'type' : 'boolean', 'default' :    True                                                            }
     }, 'required' : [] },
      'trace-spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
       'resolution-id'   : { 'type' :  'string', 'default' :    'max', 'enum' : [  'bit', 'min', 'max' ]                        },
@@ -45,14 +44,20 @@ SCHEMA_MANIFEST = {
         'driver-id'   : { 'enum' : [ 'block/enc' ] },
         'driver-spec' : { 
           'allOf' : [ { '$ref' : '#/definitions/driver-spec' }, { 'properties' : { # extend driver-spec w. driver-specific content options
-            'custom-select' : { 'type' :  'object', 'default' : {}, 'properties' : {
-              'k' : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
-              'm' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
-            }, 'required' : [] },
-            'custom-value'  : { 'type' :  'object', 'default' : {}, 'properties' : {
-              'k' : { 'type' : 'string', 'default' : '{$ * |k|}'                        },
-              'm' : { 'type' : 'string', 'default' : '{$ * |m|}'                        },
-            }, 'required' : [] },
+            'policy-id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user', 'tvla' ] },
+            'policy-spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
+              'tvla-mode'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'fvr-k', 'fvr-d', 'svr-d', 'rvr-d' ] },
+              'tvla-round'  : { 'type' : 'integer', 'default' : 1                                                       },
+
+              'user-select' : { 'type' :  'object', 'default' : {}, 'properties' : {
+                'k' : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
+                'm' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
+              }, 'required' : [] },
+              'user-value'  : { 'type' :  'object', 'default' : {}, 'properties' : {
+                'k' : { 'type' : 'string', 'default' : '{$*|k|}'                          },
+                'm' : { 'type' : 'string', 'default' : '{$*|m|}'                          }
+              }, 'required' : [] }
+            } }
           } } ]
         },
          'trace-spec' : { 
@@ -68,14 +73,20 @@ SCHEMA_MANIFEST = {
         'driver-id'   : { 'enum' : [ 'block/dec' ] },
         'driver-spec' : { 
           'allOf' : [ { '$ref' : '#/definitions/driver-spec' }, { 'properties' : { # extend driver-spec w. driver-specific content options
-            'custom-select' : { 'type' :  'object', 'default' : {}, 'properties' : {
-              'k' : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
-              'c' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
-            }, 'required' : [] },
-            'custom-value'  : { 'type' :  'object', 'default' : {}, 'properties' : {
-              'k' : { 'type' : 'string', 'default' : '{$ * |k|}'                        },
-              'c' : { 'type' : 'string', 'default' : '{$ * |c|}'                        },
-            }, 'required' : [] },
+            'policy-id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user', 'tvla' ] },
+            'policy-spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
+              'tvla-mode'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'fvr-k', 'fvr-d', 'svr-d', 'rvr-d' ] },
+              'tvla-round'  : { 'type' : 'integer', 'default' : 1                                                       },
+
+              'user-select' : { 'type' :  'object', 'default' : {}, 'properties' : {
+                'k' : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
+                'c' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
+              }, 'required' : [] },
+              'user-value'  : { 'type' :  'object', 'default' : {}, 'properties' : {
+                'k' : { 'type' : 'string', 'default' : '{$*|k|}'                          },
+                'c' : { 'type' : 'string', 'default' : '{$*|c|}'                          }
+              }, 'required' : [] }
+            } }
           } } ]
         },
          'trace-spec' : { 
