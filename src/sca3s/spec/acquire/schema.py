@@ -8,9 +8,6 @@ import json, jsonschema
 
 SCHEMA_MANIFEST = {
   'definitions' : {
-    'driver-spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
-      'verify'          : { 'type' : 'boolean', 'default' :    True                                                            }
-    }, 'required' : [] },
      'trace-spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
       'resolution-id'   : { 'type' :  'string', 'default' :    'max', 'enum' : [  'bit', 'min', 'max' ]                        },
       'resolution-spec' : { 'type' :  'number', 'default' :        8                                                           },
@@ -23,75 +20,50 @@ SCHEMA_MANIFEST = {
     }, 'required' : [] }
   },
   'type' : 'object', 'default' : {}, 'properties' : {
-    'version'     : { 'type' :  'string' },
-    'id'          : { 'type' :  'string' },
-    'user_id'     : { 'type' :  'number' },
+        'job-id'      : { 'type' :  'string'                             },
+        'job-version' : { 'type' :  'string'                             },
+        'job-type'    : { 'type' :  'string', 'enum' : [ 'user', 'ci' ]  },
 
-    'remark'      : { 'type' :  'string' },
-    'status'      : { 'type' :  'number' },
+       'user-id'      : { 'type' :  'string' },
 
-    'driver-id'   : { 'type' :  'string' },
-    'device-id'   : { 'type' :  'string' },
+    'remark'          : { 'type' :  'string' },
+    'status'          : { 'type' :  'number' },
+
+    'driver-id'       : { 'type' :  'string' },
+    'device-id'       : { 'type' :  'string' },
       
-      'repo-id'   : { 'type' :  'string' },
-      'depo-id'   : { 'type' :  'string' },
+      'repo-id'       : { 'type' :  'string' },
+      'depo-id'       : { 'type' :  'string' },
 
-     'trace-spec' : { '$ref' : '#/definitions/trace-spec' }
-  }, 'required' : [ 'version', 'id', 'user_id', 'repo-id', 'depo-id', 'driver-id', 'device-id', 'trace-spec' ],
+     'trace-spec'  : { '$ref' : '#/definitions/trace-spec' }
+  }, 'required' : [ 'job-version', 'job-id', 'job-type', 'user-id', 'repo-id', 'depo-id', 'driver-id', 'device-id', 'trace-spec' ],
   'allOf' : [ {
     'oneOf' : [ { # options: driver-spec
       'properties' : {
-        'driver-id'   : { 'enum' : [ 'block/enc' ] },
+        'driver-id'   : { 'enum' : [ 'block' ] },
         'driver-spec' : { 
-          'allOf' : [ { '$ref' : '#/definitions/driver-spec' }, { 'properties' : { # extend driver-spec w. driver-specific content options
-            'policy-id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user', 'tvla' ] },
-            'policy-spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
-              'tvla-mode'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'fvr-k', 'fvr-d', 'svr-d', 'rvr-d' ] },
-              'tvla-round'  : { 'type' : 'integer', 'default' : 1                                                       },
+          'verify'      : { 'type' : 'boolean', 'default' : True                                },
 
-              'user-select' : { 'type' :  'object', 'default' : {}, 'properties' : {
-                'k' : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
-                'm' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
-              }, 'required' : [] },
-              'user-value'  : { 'type' :  'object', 'default' : {}, 'properties' : {
-                'k' : { 'type' : 'string', 'default' : '{$*|k|}'                          },
-                'm' : { 'type' : 'string', 'default' : '{$*|m|}'                          }
-              }, 'required' : [] }
-            } }
-          } } ]
+          'policy-id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user', 'tvla' ] },
+          'policy-spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
+            'tvla-mode'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'fvr-k', 'fvr-d', 'svr-d', 'rvr-d' ] },
+            'tvla-round'  : { 'type' : 'integer', 'default' : 1                                                       },
+
+            'user-select' : { 'type' :  'object', 'default' : {}, 'properties' : {
+              'k' : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
+              'm' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
+              'c' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
+            }, 'required' : [] },
+            'user-value'  : { 'type' :  'object', 'default' : {}, 'properties' : {
+              'k' : { 'type' : 'string', 'default' : '{$*|k|}'                          },
+              'm' : { 'type' : 'string', 'default' : '{$*|m|}'                          },
+              'c' : { 'type' : 'string', 'default' : '{$*|c|}'                          }
+            }, 'required' : [] }
+          } }
         },
          'trace-spec' : { 
           'allOf' : [ { '$ref' : '#/definitions/trace-spec'  }, { 'properties' : { # extend  trace-spec w. driver-specific content options
             'content' : { 'type' :   'array', 'default' : [ 'trace/signal', 'crop/signal', 'm', 'c', 'k' ], 'items' : {
-              'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'k', 'r', 'm', 'c' ]
-            } }
-          } } ]
-        }
-      }
-    }, {
-      'properties' : {
-        'driver-id'   : { 'enum' : [ 'block/dec' ] },
-        'driver-spec' : { 
-          'allOf' : [ { '$ref' : '#/definitions/driver-spec' }, { 'properties' : { # extend driver-spec w. driver-specific content options
-            'policy-id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user', 'tvla' ] },
-            'policy-spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
-              'tvla-mode'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'fvr-k', 'fvr-d', 'svr-d', 'rvr-d' ] },
-              'tvla-round'  : { 'type' : 'integer', 'default' : 1                                                       },
-
-              'user-select' : { 'type' :  'object', 'default' : {}, 'properties' : {
-                'k' : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
-                'c' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
-              }, 'required' : [] },
-              'user-value'  : { 'type' :  'object', 'default' : {}, 'properties' : {
-                'k' : { 'type' : 'string', 'default' : '{$*|k|}'                          },
-                'c' : { 'type' : 'string', 'default' : '{$*|c|}'                          }
-              }, 'required' : [] }
-            } }
-          } } ]
-        },
-         'trace-spec' : { 
-           'allOf' : [ { '$ref' : '#/definitions/trace-spec' }, { 'properties' : { # extend  trace-spec w. driver-specific content options
-            'content' : { 'type' :   'array', 'default' : [ 'trace/signal', 'crop/signal', 'c', 'm', 'k' ], 'items' : {
               'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'k', 'r', 'm', 'c' ]
             } }
           } } ]
