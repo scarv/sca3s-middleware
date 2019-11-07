@@ -20,8 +20,8 @@ SCHEMA_MANIFEST = {
     }, 'required' : [] }
   },
   'type' : 'object', 'default' : {}, 'properties' : {
-       'job-id'      : { 'type' :  'string' },
        'job-version' : { 'type' :  'string' },
+       'job-id'      : { 'type' :  'string' },
 
       'user-id'      : { 'type' :  'string' },
 
@@ -35,7 +35,7 @@ SCHEMA_MANIFEST = {
       'depo-id'      : { 'type' :  'string' },
 
      'trace-spec'  : { '$ref' : '#/definitions/trace-spec' }
-  }, 'required' : [ 'job-version', 'job-id', 'job-type', 'user-id', 'repo-id', 'depo-id', 'driver-id', 'device-id', 'trace-spec' ],
+  }, 'required' : [ 'job-version', 'job-id', 'user-id', 'driver-id', 'device-id', 'repo-id', 'depo-id', 'trace-spec' ],
   'allOf' : [ {
     'oneOf' : [ { # options: driver-spec
       'properties' : {
