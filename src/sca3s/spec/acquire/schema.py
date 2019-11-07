@@ -20,20 +20,19 @@ SCHEMA_MANIFEST = {
     }, 'required' : [] }
   },
   'type' : 'object', 'default' : {}, 'properties' : {
-        'job-id'      : { 'type' :  'string'                             },
-        'job-version' : { 'type' :  'string'                             },
-        'job-type'    : { 'type' :  'string', 'enum' : [ 'user', 'ci' ]  },
+       'job-id'      : { 'type' :  'string' },
+       'job-version' : { 'type' :  'string' },
 
-       'user-id'      : { 'type' :  'string' },
+      'user-id'      : { 'type' :  'string' },
 
-    'remark'          : { 'type' :  'string' },
-    'status'          : { 'type' :  'number' },
+    'remark'         : { 'type' :  'string' },
+    'status'         : { 'type' :  'number' },
 
-    'driver-id'       : { 'type' :  'string' },
-    'device-id'       : { 'type' :  'string' },
+    'driver-id'      : { 'type' :  'string' },
+    'device-id'      : { 'type' :  'string' },
       
-      'repo-id'       : { 'type' :  'string' },
-      'depo-id'       : { 'type' :  'string' },
+      'repo-id'      : { 'type' :  'string' },
+      'depo-id'      : { 'type' :  'string' },
 
      'trace-spec'  : { '$ref' : '#/definitions/trace-spec' }
   }, 'required' : [ 'job-version', 'job-id', 'job-type', 'user-id', 'repo-id', 'depo-id', 'driver-id', 'device-id', 'trace-spec' ],
