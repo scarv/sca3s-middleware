@@ -9,44 +9,44 @@ import json, jsonschema
 SCHEMA_MANIFEST = {
   'definitions' : {
      'trace_spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
-      'resolution_id'   : { 'type' :  'string', 'default' :    'max', 'enum' : [  'bit', 'min', 'max' ]                        },
-      'resolution_spec' : { 'type' :  'number', 'default' :        8                                                           },
+      'resolution_id'   : { 'type' :  'string', 'default' :  'max', 'enum' : [  'bit', 'min', 'max' ]                        },
+      'resolution_spec' : { 'type' :  'number', 'default' :      8                                                           },
 
-          'period_id'   : { 'type' :  'string', 'default' :   'auto', 'enum' : [ 'auto', 'interval', 'frequency', 'duration' ] },
-          'period_spec' : { 'type' :  'number', 'default' :        0                                                           },
+          'period_id'   : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'auto', 'interval', 'frequency', 'duration' ] },
+          'period_spec' : { 'type' :  'number', 'default' :      0                                                           },
 
-      'type'            : { 'type' :  'string', 'default' :   '<f8',  'enum' : [ '<f4', '<f8' ]                                },
-      'count'           : { 'type' :  'number', 'default' :        1                                                           }
+      'type'            : { 'type' :  'string', 'default' :  '<f8',  'enum' : [ '<f4', '<f8' ]                               },
+      'count'           : { 'type' :  'number', 'default' :      1                                                           }
     }, 'required' : [] }
   },
   'type' : 'object', 'default' : {}, 'properties' : {
-       'job_version' : { 'type' :  'string' },
-       'job_id'      : { 'type' :  'string' },
+      'user_id'      : { 'type' : 'integer' },
 
-      'user_id'      : { 'type' :  'string' },
+       'job_version' : { 'type' : 'string'  },
+       'job_id'      : { 'type' : 'string'  },
 
-    'remark'         : { 'type' :  'string' },
-    'status'         : { 'type' :  'number' },
+    'remark'         : { 'type' : 'string'  },
+    'status'         : { 'type' : 'integer' },
 
-    'driver_id'      : { 'type' :  'string' },
-    'device_id'      : { 'type' :  'string' },
+    'driver_id'      : { 'type' : 'string'  },
+    'device_id'      : { 'type' : 'string'  },
       
-      'repo_id'      : { 'type' :  'string' },
-      'depo_id'      : { 'type' :  'string' },
+      'repo_id'      : { 'type' : 'string'  },
+      'depo_id'      : { 'type' : 'string'  },
 
-     'trace_spec'  : { '$ref' : '#/definitions/trace_spec' }
+     'trace_spec'    : { '$ref' : '#/definitions/trace_spec' }
   }, 'required' : [ 'job_version', 'job_id', 'user_id', 'driver_id', 'device_id', 'repo_id', 'depo_id', 'trace_spec' ],
   'allOf' : [ {
     'oneOf' : [ { # options: driver_spec
       'properties' : {
         'driver_id'   : { 'enum' : [ 'block' ] },
-        'driver_spec' : { 
+        'driver_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
           'verify'      : { 'type' : 'boolean', 'default' : True                                },
 
           'policy_id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user', 'tvla' ] },
           'policy_spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
-            'tvla_mode'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'fvr_k', 'fvr_d', 'svr_d', 'rvr_d' ] },
-            'tvla_round'  : { 'type' : 'integer', 'default' : 1                                                       },
+            'tvla_mode'   : { 'type' :  'string', 'default' : 'fvr_d', 'enum' : [ 'fvr_k', 'fvr_d', 'svr_d', 'rvr_d' ] },
+            'tvla_round'  : { 'type' : 'integer', 'default' : 1                                                        },
 
             'user_select' : { 'type' :  'object', 'default' : {}, 'properties' : {
               'k' : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
@@ -59,10 +59,10 @@ SCHEMA_MANIFEST = {
               'c' : { 'type' : 'string', 'default' : '{$*|c|}'                          }
             }, 'required' : [] }
           } }
-        },
+        } },
          'trace_spec' : { 
           'allOf' : [ { '$ref' : '#/definitions/trace_spec'  }, { 'properties' : { # extend  trace_spec w. driver_specific content options
-            'content' : { 'type' :   'array', 'default' : [ 'trace/signal', 'crop/signal', 'm', 'c', 'k' ], 'items' : {
+            'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'm', 'c', 'k' ], 'items' : {
               'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'k', 'r', 'm', 'c' ]
             } }
           } } ]
