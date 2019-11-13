@@ -4,6 +4,6 @@
 # can be found at https://opensource.org/licenses/MIT (or should be included 
 # as LICENSE.txt within the associated archive or repository).
 
-from sca3s.share import share   as share
-from sca3s.share import acquire as acquire
-from sca3s.share import analyse as analyse
+from sca3s.middleware import acquire as acquire
+from sca3s.middleware import analyse as analyse
+from sca3s.middleware import share   as share
