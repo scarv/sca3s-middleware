@@ -1,4 +1,4 @@
-# [SCA3S](https://github.com/scarv/sca3s): middle-ware
+# [SCA3S](https://github.com/scarv/sca3s): middle-ware (or support infrastructure)
 
 <!--- -------------------------------------------------------------------- --->
 
