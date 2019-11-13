@@ -15,7 +15,7 @@
 from pkgutil import extend_path
 __path__ = extend_path( __path__, __name__ )
 
-__all__ = [ 'spec' ]
+__all__ = [ 'share' ]
 
-from . import spec
+from . import share
 
