@@ -1,9 +1,9 @@
-# [SCA3S](https://github.com/scarv/sca3s): specification
+# [SCA3S](https://github.com/scarv/sca3s): middle-ware
 
 <!--- -------------------------------------------------------------------- --->
 
-[![Build Status](https://travis-ci.com/scarv/sca3s-spec.svg)](https://travis-ci.com/scarv/sca3s-spec)
-[![Documentation](https://codedocs.xyz/scarv/sca3s-spec.svg)](https://codedocs.xyz/scarv/sca3s-spec)
+[![Build Status](https://travis-ci.com/scarv/sca3s-middleware.svg)](https://travis-ci.com/scarv/sca3s-middleware)
+[![Documentation](https://codedocs.xyz/scarv/sca3s-middleware.svg)](https://codedocs.xyz/scarv/sca3s-middleware)
 
 <!--- -------------------------------------------------------------------- --->
 
@@ -21,7 +21,9 @@ The main
 [repository](https://github.com/scarv/sca3s)
 acts as a general container for associated resources;
 this specific submodule houses
-the overarching specification and documentation.*
+various 
+[middle-ware](https://en.wikipedia.org/wiki/Middleware)
+components (e.g., relating to interaction between front- and back-end).*
 
 <!--- -------------------------------------------------------------------- --->
 
@@ -30,13 +32,9 @@ the overarching specification and documentation.*
 ```
 ├── bin                     - scripts (e.g., environment configuration)
 ├── build                   - working directory for build
-├── doc                     - documentation
-│   └── tex                   - LaTeX content
-├── extern                  - external resources (e.g., submodules)
-│   └── texmf                 - submodule: scarv/texmf
 └── src
     └── sca3s               - source code for SCA3S
-        └── spec            - source code for SCA3S specification
+        └── middleware      - source code for SCA3S middle-ware
             ├── acquire       - acquire-specific functionality
             ├── analyse       - analyse-specific functionality
             └── share         - shared           functionality
@@ -46,49 +44,6 @@ the overarching specification and documentation.*
 
 ## Quickstart
 
-1. Install any associated pre-requisites, e.g.,
-
-   - a modern 
-     [LaTeX](https://www.latex-project.org)
-     distributation,
-     such as
-     [TeX Live](https://www.tug.org/texlive),
-     including any required packages.
-
-2. Execute
-
-   ```sh
-   git clone https://github.com/scarv/sca3s-spec.git
-   cd ./sca3s-spec
-   git submodule update --init --recursive
-   source ./bin/conf.sh
-   ```
-
-   to clone and initialise the repository,
-   then configure the environment;
-   for example, you should find that the environment variable
-   `REPO_HOME`
-   is set appropriately.
-
-3. Use targets in the top-level `Makefile` to drive a set of
-   common tasks, e.g.,
-
-   - execute
-
-     ```sh
-     make doc
-     ```
-
-     to build the documentation,
-
-   - execute
-
-     ```sh
-     make clean
-     ```
-
-     to clean-up
-     (e.g., remove everything built in `${REPO_HOME}/build`).
 
 <!--- -------------------------------------------------------------------- --->
 
