@@ -97,10 +97,7 @@ the overarching specification and documentation.*
 This work has been supported in part 
 
 - by EPSRC via grant 
-  [EP/R012288/1](https://gow.epsrc.ukri.org/NGBOViewGrant.aspx?GrantRef=EP/R012288/1)
-  under the 
-  [RISE](https://www.ukrise.org) 
-  programme, 
+  [EP/R012288/1](https://gow.epsrc.ukri.org/NGBOViewGrant.aspx?GrantRef=EP/R012288/1) (under the [RISE](https://www.ukrise.org) programme), 
   and 
 - by the
   [AWS Cloud Credits for Research](https://aws.amazon.com/research-credits)
