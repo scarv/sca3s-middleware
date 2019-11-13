@@ -8,8 +8,9 @@ from sca3s.share import share   as share
 from sca3s.share import acquire as acquire
 from sca3s.share import analyse as analyse
 
-import json, jsonschema
+class AnalyseException( share.exception.FrontEndException ) :
+  def __init__( self, message = None, exception = None ):
+    super().__init__( message = message, exception = exception )
 
-SCHEMA_MANIFEST = {
-
-}
+  def _translate( self ) :
+    return ""

@@ -4,58 +4,14 @@
 # can be found at https://opensource.org/licenses/MIT (or should be included 
 # as LICENSE.txt within the associated archive or repository).
 
-import abc, sys, traceback
+#           share   = 1xxx
+# front-end         = 2xxx
+# front-end share   = 31xx
+# front-end acquire = 32xx
+# front-end analyse = 33xx
+#  back-end         = 4xxx
+#  back-end share   = 41xx
+#  back-end acquire = 42xx
+#  back-end analyse = 43xx
 
-class SCA3SException( Exception ) :
-  def __init__( self, message = None, exception = None ):
-    super().__init__( message )
-
-    self.exception = exception
-
-  @abc.abstractmethod
-  def _translate( self ) :
-    raise NotImplementedError()
-
-  def __str__( self ):
-    if   (       self.message   == None ) :
-      t = "unknown"
-    elif ( type( self.message ) == str  ) :
-      t =                  self.message
-    elif ( type( self.message ) == int  ) :
-      t = self._translate( self.message )
-
-    return t
-
-  def dump( self ) :
-    t = str( self )
-
-    if ( self.exception != None ) :
-      lines = list()
-
-      for line in traceback.format_exception( self.exception, self.exception, self.exception.__traceback__ ) :
-        lines.extend( line.strip( '\n' ).split( '\n' ) )
-    
-      n = max( [ len( line ) for line in lines ] )
-    
-      t += '┌' + ( '─' * ( n + 2 ) ) + '┐'
-    
-      for line in lines :
-        t += '│ ' + line + ( ' ' * ( n - len( line ) ) ) + ' │'
-    
-      t +=  '└' + ( '─' * ( n + 2 ) ) + '┘'
-    
-    return t
-
-class FrontEndException( SCA3SException ) :
-  def __init__( self, message = None, exception = None ):
-    super().__init__( message = message, exception = exception )
-
-class  BackEndException( SCA3SException ) :
-  def __init__( self, message = None, exception = None ):
-    super().__init__( message = message, exception = exception )
-
-
-
-
-
-
+INVALID_CONF = 1000
