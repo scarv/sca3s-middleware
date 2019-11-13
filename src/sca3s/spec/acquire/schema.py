@@ -8,152 +8,144 @@ import json, jsonschema
 
 SCHEMA_MANIFEST = {
   'definitions' : {
-    'driver-spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
-      'policy'          : { 'type' :  'string', 'default' : 'custom', 'enum' : [ 'custom', 'tvla' ]                            },
-      'verify'          : { 'type' : 'boolean', 'default' :    True                                                            }
-    }, 'required' : [] },
-     'trace-spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
-      'resolution-id'   : { 'type' :  'string', 'default' :    'max', 'enum' : [  'bit', 'min', 'max' ]                        },
-      'resolution-spec' : { 'type' :  'number', 'default' :        8                                                           },
+     'trace_spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
+      'resolution_id'   : { 'type' :  'string', 'default' :  'max', 'enum' : [  'bit', 'min', 'max' ]                        },
+      'resolution_spec' : { 'type' :  'number', 'default' :      8                                                           },
 
-          'period-id'   : { 'type' :  'string', 'default' :   'auto', 'enum' : [ 'auto', 'interval', 'frequency', 'duration' ] },
-          'period-spec' : { 'type' :  'number', 'default' :        0                                                           },
+          'period_id'   : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'auto', 'interval', 'frequency', 'duration' ] },
+          'period_spec' : { 'type' :  'number', 'default' :      0                                                           },
 
-      'type'            : { 'type' :  'string', 'default' :   '<f8',  'enum' : [ '<f4', '<f8' ]                                },
-      'count'           : { 'type' :  'number', 'default' :        1                                                           }
+      'type'            : { 'type' :  'string', 'default' :  '<f8',  'enum' : [ '<f4', '<f8' ]                               },
+      'count'           : { 'type' :  'number', 'default' :      1                                                           }
     }, 'required' : [] }
   },
   'type' : 'object', 'default' : {}, 'properties' : {
-    'version'     : { 'type' :  'string' },
-    'id'          : { 'type' :  'string' },
-    'user_id'     : { 'type' :  'number' },
+      'user_id'      : { 'type' : 'integer' },
 
-    'remark'      : { 'type' :  'string' },
-    'status'      : { 'type' :  'number' },
+       'job_version' : { 'type' : 'string'  },
+       'job_id'      : { 'type' : 'string'  },
 
-    'driver-id'   : { 'type' :  'string' },
-    'device-id'   : { 'type' :  'string' },
+    'remark'         : { 'type' : 'string'  },
+    'status'         : { 'type' : 'integer' },
+
+    'driver_id'      : { 'type' : 'string'  },
+    'device_id'      : { 'type' : 'string'  },
       
-      'repo-id'   : { 'type' :  'string' },
-      'depo-id'   : { 'type' :  'string' },
+      'repo_id'      : { 'type' : 'string'  },
+      'depo_id'      : { 'type' : 'string'  },
 
-     'trace-spec' : { '$ref' : '#/definitions/trace-spec' }
-  }, 'required' : [ 'version', 'id', 'user_id', 'repo-id', 'depo-id', 'driver-id', 'device-id', 'trace-spec' ],
+     'trace_spec'    : { '$ref' : '#/definitions/trace_spec' }
+  }, 'required' : [ 'job_version', 'job_id', 'user_id', 'driver_id', 'device_id', 'repo_id', 'depo_id', 'trace_spec' ],
   'allOf' : [ {
-    'oneOf' : [ { # options: driver-spec
+    'oneOf' : [ { # options: driver_spec
       'properties' : {
-        'driver-id'   : { 'enum' : [ 'block/enc' ] },
-        'driver-spec' : { 
-          'allOf' : [ { '$ref' : '#/definitions/driver-spec' }, { 'properties' : { # extend driver-spec w. driver-specific content options
-            'custom-select' : { 'type' :  'object', 'default' : {}, 'properties' : {
+        'driver_id'   : { 'enum' : [ 'block' ] },
+        'driver_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
+          'verify'      : { 'type' : 'boolean', 'default' : True                                },
+
+          'policy_id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user', 'tvla' ] },
+          'policy_spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
+            'tvla_mode'   : { 'type' :  'string', 'default' : 'fvr_d', 'enum' : [ 'fvr_k', 'fvr_d', 'svr_d', 'rvr_d' ] },
+            'tvla_round'  : { 'type' : 'integer', 'default' : 1                                                        },
+
+            'user_select' : { 'type' :  'object', 'default' : {}, 'properties' : {
               'k' : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
               'm' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
-            }, 'required' : [] },
-            'custom-value'  : { 'type' :  'object', 'default' : {}, 'properties' : {
-              'k' : { 'type' : 'string', 'default' : '{$ * |k|}'                        },
-              'm' : { 'type' : 'string', 'default' : '{$ * |m|}'                        },
-            }, 'required' : [] },
-          } } ]
-        },
-         'trace-spec' : { 
-          'allOf' : [ { '$ref' : '#/definitions/trace-spec'  }, { 'properties' : { # extend  trace-spec w. driver-specific content options
-            'content' : { 'type' :   'array', 'default' : [ 'trace/signal', 'crop/signal', 'm', 'c', 'k' ], 'items' : {
-              'enum' : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'k', 'r', 'm', 'c' ]
-            } }
-          } } ]
-        }
-      }
-    }, {
-      'properties' : {
-        'driver-id'   : { 'enum' : [ 'block/dec' ] },
-        'driver-spec' : { 
-          'allOf' : [ { '$ref' : '#/definitions/driver-spec' }, { 'properties' : { # extend driver-spec w. driver-specific content options
-            'custom-select' : { 'type' :  'object', 'default' : {}, 'properties' : {
-              'k' : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
               'c' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
             }, 'required' : [] },
-            'custom-value'  : { 'type' :  'object', 'default' : {}, 'properties' : {
-              'k' : { 'type' : 'string', 'default' : '{$ * |k|}'                        },
-              'c' : { 'type' : 'string', 'default' : '{$ * |c|}'                        },
-            }, 'required' : [] },
-          } } ]
-        },
-         'trace-spec' : { 
-           'allOf' : [ { '$ref' : '#/definitions/trace-spec' }, { 'properties' : { # extend  trace-spec w. driver-specific content options
-             'content' : { 'type' :   'array', 'default' : [ 'trace/signal', 'crop/signal', 'c', 'm', 'k' ], 'items' : {
-               'enum' : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'k', 'r', 'm', 'c' ]
+            'user_value'  : { 'type' :  'object', 'default' : {}, 'properties' : {
+              'k' : { 'type' : 'string', 'default' : '{$*|k|}'                          },
+              'm' : { 'type' : 'string', 'default' : '{$*|m|}'                          },
+              'c' : { 'type' : 'string', 'default' : '{$*|c|}'                          }
+            }, 'required' : [] }
+          } }
+        } },
+         'trace_spec' : { 
+          'allOf' : [ { '$ref' : '#/definitions/trace_spec'  }, { 'properties' : { # extend  trace_spec w. driver_specific content options
+            'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'm', 'c', 'k' ], 'items' : {
+              'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'k', 'r', 'm', 'c' ]
             } }
           } } ]
         }
       }
     } ] }, { 
-    'oneOf' : [ { # options:  board-spec
+    'oneOf' : [ { # options:  board_spec
       'properties' : {
-         'board-id'   : { 'enum' : [ 'scale/lpc1313fbd48' ] },
-         'board-spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
-                   'connect-id'      : { 'type' : 'string' },
-                   'connect-timeout' : { 'type' : 'number' },
+         'board_id'   : { 'enum' : [ 'scale/lpc1313fbd48' ] },
+         'board_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
+                   'connect_id'      : { 'type' : 'string'           },
+                   'connect_timeout' : { 'type' : 'number'           },
   
-                   'program-id'      : { 'type' : 'string' },
-                   'program-timeout' : { 'type' : 'number' }
-        }, 'required' : [ 'connect-id', 'connect-timeout', 'program-id', 'program-timeout' ] }
+                   'program_id'      : { 'type' : 'string'           },
+                   'program_timeout' : { 'type' : 'number'           },
+                   'program_mode'    : { 'enum' : [ 'usb', 'jlink' ] },
+         }, 'required' : [ 'connect_id', 'connect_timeout', 'program_id', 'program_timeout', 'program_mode' ] },
+         'board_path' : { 'type' :  'array', 'default' : [], 'items' : { 
+           'type' : 'string' 
+         } }
       }
     } ] }, { 
-    'oneOf' : [ { # options:  scope-spec
+    'oneOf' : [ { # options:  scope_spec
       'properties' : {
-         'scope-id'   : { 'enum' : [ 'picoscope/ps2206b' ] },
-         'scope-spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
-                   'connect-id'      : { 'type' : 'string' },
-                   'connect-timeout' : { 'type' : 'number' },
+         'scope_id'   : { 'enum' : [ 'picoscope/ps2206b' ] },
+         'scope_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
+                   'connect_id'      : { 'type' : 'string' },
+                   'connect_timeout' : { 'type' : 'number' },
 
-           'channel-trigger-id'      : { 
+           'channel_trigger_id'      : { 
              'enum' : [ 'A', 'B' ] 
             },
-           'channel-acquire-id'      : {
+           'channel_acquire_id'      : {
              'enum' : [ 'A', 'B' ]
             },
-           'channel-disable-id'      : { 'type' :  'array', 'default' : [], 'items' : {
+           'channel_disable_id'      : { 'type' :  'array', 'default' : [], 'items' : {
              'enum' : [ 'A', 'B' ]
-           } }
-        }, 'required' : [ 'connect-id', 'connect-timeout', 'channel-trigger-id', 'channel-acquire-id' ] }
+           } },
+         }, 'required' : [ 'connect_id', 'connect_timeout', 'channel_trigger_id', 'channel_acquire_id' ] },
+         'scope_path' : { 'type' :  'array', 'default' : [], 'items' : { 
+           'type' : 'string' 
+         } }
       }
     }, {
       'properties' : {
-         'scope-id'   : { 'enum' : [ 'picoscope/ps3406b' ] },
-         'scope-spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
-                   'connect-id'      : { 'type' : 'string' },
-                   'connect-timeout' : { 'type' : 'number' },
+         'scope_id'   : { 'enum' : [ 'picoscope/ps3406b' ] },
+         'scope_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
+                   'connect_id'      : { 'type' : 'string' },
+                   'connect_timeout' : { 'type' : 'number' },
   
-           'channel-trigger-id'      : { 
+           'channel_trigger_id'      : { 
              'enum' : [ 'A', 'B', 'C', 'D' ] 
             },
-           'channel-acquire-id'      : {
+           'channel_acquire_id'      : {
              'enum' : [ 'A', 'B', 'C', 'D' ]
             },
-           'channel-disable-id'      : { 'type' :  'array', 'default' : [], 'items' : {
+           'channel_disable_id'      : { 'type' :  'array', 'default' : [], 'items' : {
              'enum' : [ 'A', 'B', 'C', 'D' ]
            } }
-        }, 'required' : [ 'connect-id', 'connect-timeout', 'channel-trigger-id', 'channel-acquire-id' ] }
+         }, 'required' : [ 'connect_id', 'connect_timeout', 'channel_trigger_id', 'channel_acquire_id' ] },
+         'scope_path' : { 'type' :  'array', 'default' : [], 'items' : { 
+           'type' : 'string' 
+         } }
       }
     } ] }, { 
-    'oneOf' : [ { # options:   repo-spec
+    'oneOf' : [ { # options:   repo_spec
       'properties' : {
-          'repo-id'   : { 'enum' : [ 'git' ] },
-          'repo-spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
+          'repo_id'   : { 'enum' : [ 'git' ] },
+          'repo_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
             'url'                     : { 'type' : 'string'                       },
             'tag'                     : { 'type' : 'string', 'default' : 'master' },
             'conf'                    : { 'type' : 'object', 'default' : {}       }
         }, 'required' : [ 'url' ] }
       }
     } ] }, { 
-    'oneOf' : [ { # options:   depo-spec
+    'oneOf' : [ { # options:   depo_spec
       'properties' : {
-          'depo-id'   : { 'enum' : [ 's3' ] },
-          'depo-spec' : { 'type' : 'object', 'default' : {}, 'properties' : {  
+          'depo_id'   : { 'enum' : [ 's3' ] },
+          'depo_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {  
             'identity_id'             : { 'type' :     'string'                                 },
   
-              'region-id'             : { 'type' :     'string', 'default' : 'eu-west-1'        },
-              'bucket-id'             : { 'type' :     'string', 'default' : 'scarv-lab-traces' }
+              'region_id'             : { 'type' :     'string', 'default' : 'eu-west-1'        },
+              'bucket_id'             : { 'type' :     'string', 'default' : 'scarv-lab-traces' }
         }, 'required' : [] }
       }
     } ] }
