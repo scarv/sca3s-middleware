@@ -67,7 +67,7 @@ SCHEMA_MANIFEST = {
          'trace_spec' : { 
           'allOf' : [ { '$ref' : '#/definitions/trace_spec'  }, { 'properties' : { # extend  trace_spec w. driver_specific content options
             'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'm', 'c', 'k' ], 'items' : {
-              'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'k', 'r', 'm', 'c' ]
+              'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'r', 'k', 'm', 'c' ]
             } }
           } } ]
         }
