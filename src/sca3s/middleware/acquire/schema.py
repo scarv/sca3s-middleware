@@ -26,17 +26,18 @@ SCHEMA_MANIFEST = {
   'type' : 'object', 'default' : {}, 'properties' : {
       'user_id'      : { 'type' : 'integer' },
 
-       'job_version' : { 'type' : 'string'  },
-       'job_id'      : { 'type' : 'string'  },
+       'job_type'    : { 'type' : 'string', 'default' : 'user', 'enum' : [ 'user', 'ci' ] },
+       'job_version' : { 'type' : 'string'                                                },
+       'job_id'      : { 'type' : 'string'                                                },
 
-    'remark'         : { 'type' : 'string'  },
-    'status'         : { 'type' : 'integer' },
+    'remark'         : { 'type' : 'string'                                                },
+    'status'         : { 'type' : 'integer'                                               },
 
-    'driver_id'      : { 'type' : 'string'  },
-    'device_id'      : { 'type' : 'string'  },
+    'driver_id'      : { 'type' : 'string'                                                },
+    'device_id'      : { 'type' : 'string'                                                },
       
-      'repo_id'      : { 'type' : 'string'  },
-      'depo_id'      : { 'type' : 'string'  },
+      'repo_id'      : { 'type' : 'string'                                                },
+      'depo_id'      : { 'type' : 'string'                                                },
 
      'trace_spec'    : { '$ref' : '#/definitions/trace_spec' }
   }, 'required' : [ 'job_version', 'job_id', 'user_id', 'driver_id', 'device_id', 'repo_id', 'depo_id', 'trace_spec' ],
@@ -73,72 +74,13 @@ SCHEMA_MANIFEST = {
         }
       }
     } ] }, { 
-    'oneOf' : [ { # options:  board_spec
-      'properties' : {
-         'board_id'   : { 'enum' : [ 'scale/lpc1313fbd48' ] },
-         'board_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
-                   'connect_id'      : { 'type' : 'string'           },
-                   'connect_timeout' : { 'type' : 'number'           },
-  
-                   'program_id'      : { 'type' : 'string'           },
-                   'program_timeout' : { 'type' : 'number'           },
-                   'program_mode'    : { 'enum' : [ 'usb', 'jlink' ] },
-         }, 'required' : [ 'connect_id', 'connect_timeout', 'program_id', 'program_timeout', 'program_mode' ] },
-         'board_path' : { 'type' :  'array', 'default' : [], 'items' : { 
-           'type' : 'string' 
-         } }
-      }
-    } ] }, { 
-    'oneOf' : [ { # options:  scope_spec
-      'properties' : {
-         'scope_id'   : { 'enum' : [ 'picoscope/ps2206b' ] },
-         'scope_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
-                   'connect_id'      : { 'type' : 'string' },
-                   'connect_timeout' : { 'type' : 'number' },
-
-           'channel_trigger_id'      : { 
-             'enum' : [ 'A', 'B' ] 
-            },
-           'channel_acquire_id'      : {
-             'enum' : [ 'A', 'B' ]
-            },
-           'channel_disable_id'      : { 'type' :  'array', 'default' : [], 'items' : {
-             'enum' : [ 'A', 'B' ]
-           } },
-         }, 'required' : [ 'connect_id', 'connect_timeout', 'channel_trigger_id', 'channel_acquire_id' ] },
-         'scope_path' : { 'type' :  'array', 'default' : [], 'items' : { 
-           'type' : 'string' 
-         } }
-      }
-    }, {
-      'properties' : {
-         'scope_id'   : { 'enum' : [ 'picoscope/ps3406b' ] },
-         'scope_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
-                   'connect_id'      : { 'type' : 'string' },
-                   'connect_timeout' : { 'type' : 'number' },
-  
-           'channel_trigger_id'      : { 
-             'enum' : [ 'A', 'B', 'C', 'D' ] 
-            },
-           'channel_acquire_id'      : {
-             'enum' : [ 'A', 'B', 'C', 'D' ]
-            },
-           'channel_disable_id'      : { 'type' :  'array', 'default' : [], 'items' : {
-             'enum' : [ 'A', 'B', 'C', 'D' ]
-           } }
-         }, 'required' : [ 'connect_id', 'connect_timeout', 'channel_trigger_id', 'channel_acquire_id' ] },
-         'scope_path' : { 'type' :  'array', 'default' : [], 'items' : { 
-           'type' : 'string' 
-         } }
-      }
-    } ] }, { 
     'oneOf' : [ { # options:   repo_spec
       'properties' : {
           'repo_id'   : { 'enum' : [ 'git' ] },
           'repo_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
-            'url'                     : { 'type' : 'string'                       },
-            'tag'                     : { 'type' : 'string', 'default' : 'master' },
-            'conf'                    : { 'type' : 'object', 'default' : {}       }
+            'url'                     : { 'type' : 'string'                              },
+            'tag'                     : { 'type' : 'string', 'default' : 'master'        },
+            'conf'                    : { 'type' : 'object', 'default' : {}              }
         }, 'required' : [ 'url' ] }
       }
     } ] }, { 
@@ -146,10 +88,10 @@ SCHEMA_MANIFEST = {
       'properties' : {
           'depo_id'   : { 'enum' : [ 's3' ] },
           'depo_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {  
-            'identity_id'             : { 'type' :     'string'                                 },
+            'identity_id'             : { 'type' : 'string'                              },
   
-              'region_id'             : { 'type' :     'string', 'default' : 'eu-west-1'        },
-              'bucket_id'             : { 'type' :     'string', 'default' : 'scarv-lab-traces' }
+              'region_id'             : { 'type' : 'string', 'default' : 'eu-west-1'     },
+              'bucket_id'             : { 'type' : 'string', 'default' : 'sca3s-acquire' }
         }, 'required' : [] }
       }
     } ] }
