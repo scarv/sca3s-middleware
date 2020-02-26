@@ -10,7 +10,16 @@ from sca3s.middleware import share   as share
 
 import json, jsonschema
 
-SCHEMA_MANIFEST = {
+MANIFEST_ACK = {
+  'definitions' : {
+
+  },
+  'type' : 'object', 'default' : {}, 'properties' : {
+    'status'         : { 'type' : 'integer'                                               }
+  }
+}
+
+MANIFEST_REQ = {
   'definitions' : {
      'trace_spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
       'resolution_id'   : { 'type' :  'string', 'default' :  'max', 'enum' : [  'bit', 'min', 'max' ]                        },
@@ -24,14 +33,13 @@ SCHEMA_MANIFEST = {
     }, 'required' : [] }
   },
   'type' : 'object', 'default' : {}, 'properties' : {
-      'user_id'      : { 'type' : 'integer' },
+    'status'         : { 'type' : 'integer'                                               },
 
        'job_type'    : { 'type' : 'string', 'default' : 'user', 'enum' : [ 'user', 'ci' ] },
        'job_version' : { 'type' : 'string'                                                },
        'job_id'      : { 'type' : 'string'                                                },
 
-    'remark'         : { 'type' : 'string'                                                },
-    'status'         : { 'type' : 'integer'                                               },
+      'user_id'      : { 'type' : 'integer'                                               },
 
     'driver_id'      : { 'type' : 'string'                                                },
     'device_id'      : { 'type' : 'string'                                                },

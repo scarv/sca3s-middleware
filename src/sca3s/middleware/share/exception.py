@@ -4,38 +4,19 @@
 # can be found at https://opensource.org/licenses/MIT (or should be included 
 # as LICENSE.txt within the associated archive or repository).
 
-import abc, sys, traceback
+import sys, traceback
 
-class SCA3SException( Exception ) :
-  def __init__( self, message = None, exception = None ):
-    super().__init__( message )
+def dump( exception, log = None ) :
+  lines = list()
 
-    self.exception = exception
+  for line in traceback.format_exception( *sys.exc_info() ) :
+    lines.extend( line.strip( '\n' ).split( '\n' ) )
 
-  @abc.abstractmethod
-  def _translate( self ) :
-    raise NotImplementedError()
+  n = max( [ len( line ) for line in lines ] )
 
-  def __str__( self ):
-    if   (       self.message   == None ) :
-      t = "unknown"
-    elif ( type( self.message ) == str  ) :
-      t =                  self.message
-    elif ( type( self.message ) == int  ) :
-      t = self._translate( self.message )
+  log.error( '┌' + ( '─' * ( n + 2 ) ) + '┐' )
 
-    return t
+  for line in lines :
+    log.error( '│ ' + line + ( ' ' * ( n - len( line ) ) ) + ' │' )
 
-class FrontEndException( SCA3SException ) :
-  def __init__( self, message = None, exception = None ):
-    super().__init__( message = message, exception = exception )
-
-class  BackEndException( SCA3SException ) :
-  def __init__( self, message = None, exception = None ):
-    super().__init__( message = message, exception = exception )
-
-
-
-
-
-
+  log.error( '└' + ( '─' * ( n + 2 ) ) + '┘' )

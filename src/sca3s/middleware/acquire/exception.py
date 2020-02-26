@@ -7,10 +7,3 @@
 from sca3s.middleware import acquire as acquire
 from sca3s.middleware import analyse as analyse
 from sca3s.middleware import share   as share
-
-class AcquireException( share.exception.FrontEndException ) :
-  def __init__( self, message = None, exception = None ):
-    super().__init__( message = message, exception = exception )
-
-  def _translate( self ) :
-    return ""
