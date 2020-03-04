@@ -27,6 +27,15 @@ class Status(enum.IntEnum):
         except ValueError:  # B16 Integer
             return Status(int(value, 16))
 
+    @staticmethod
+    def dict(status: enum.IntEnum, data=None) -> dict:
+        if data is None:
+            return {
+                'status': status
+            }
+        data['status'] = status
+        return data
+
     # status values: generic
     SUCCESS = encode(MODE_SUCCESS, DOMAIN_GENERIC, 0x0000)
     # status values:  back-end
@@ -39,9 +48,11 @@ class Status(enum.IntEnum):
     # status values: front-end, API-related
     FAILURE_FE_API_QUEUE_EMPTY = encode(MODE_FAILURE, DOMAIN_FE, 0x0100)
     FAILURE_FE_API_QUEUE_FULL = encode(MODE_FAILURE, DOMAIN_FE, 0x0101)
+    # status values: front-end, User-related
+    FAILURE_FE_USER_NO_CREDITS = encode(MODE_FAILURE, DOMAIN_FE, 0x0200)
     # status values: front-end, AWS-related
-    FAILURE_FE_AWS_AUTH = encode(MODE_FAILURE, DOMAIN_FE, 0x0200)
-    FAILURE_FE_AWS_URL = encode(MODE_FAILURE, DOMAIN_FE, 0x0201)
+    FAILURE_FE_AWS_AUTH = encode(MODE_FAILURE, DOMAIN_FE, 0x0300)
+    FAILURE_FE_AWS_URL = encode(MODE_FAILURE, DOMAIN_FE, 0x0301)
 
     def is_success(self):
         return ((self.value >> 31) & 0x1) == MODE_SUCCESS
@@ -74,6 +85,9 @@ class Status(enum.IntEnum):
             t = ''
 
         return re.sub(r'\s\s+', ' ', t)
+
+    def hex(self):
+        return "0x{0:08X}".format(self.value)
 
     def __repr__(self):
         return (self.name) + ' : ' + ('<' + '{0:08X}'.format(self.value) + '>')
