@@ -33,7 +33,7 @@ MANIFEST_REQ = {
     }, 'required' : [] }
   },
   'type' : 'object', 'default' : {}, 'properties' : {
-    'status'         : { 'type' : 'integer'                                               },
+    'status'         : { 'type' : 'string'                                                },
 
        'job_type'    : { 'type' : 'string', 'default' : 'user', 'enum' : [ 'user', 'ci' ] },
        'job_version' : { 'type' : 'string'                                                },
