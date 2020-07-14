@@ -1,7 +1,7 @@
 # Copyright (C) 2018 SCARV project <info@scarv.org>
 #
-# Use of this source code is restricted per the MIT license, a copy of which 
-# can be found at https://opensource.org/licenses/MIT (or should be included 
+# Use of this source code is restricted per the MIT license, a copy of which
+# can be found at https://opensource.org/licenses/MIT (or should be included
 # as LICENSE.txt within the associated archive or repository).
 
 import enum, re
@@ -31,9 +31,9 @@ class Status(enum.IntEnum):
     def dict(status: enum.IntEnum, data=None) -> dict:
         if data is None:
             return {
-                'status': status
+                'status': status.hex()
             }
-        data['status'] = status
+        data['status'] = status.hex()
         return data
 
     # status values: generic
