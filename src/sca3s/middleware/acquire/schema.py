@@ -88,7 +88,9 @@ MANIFEST_REQ = {
           'repo_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
             'url'                     : { 'type' : 'string'                              },
             'tag'                     : { 'type' : 'string', 'default' : 'master'        },
-            'conf'                    : { 'type' : 'object', 'default' : {}              }
+            'conf'                    : { 'type' :  'array', 'default' : [], 'items' : {
+                'type' : 'string'
+            } }
         }, 'required' : [ 'url' ] }
       }
     } ] }, { 
