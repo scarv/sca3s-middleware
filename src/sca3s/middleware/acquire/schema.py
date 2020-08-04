@@ -22,14 +22,17 @@ MANIFEST_ACK = {
 MANIFEST_REQ = {
   'definitions' : {
      'trace_spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
-      'resolution_id'   : { 'type' :  'string', 'default' :  'max', 'enum' : [  'bit', 'min', 'max' ]                        },
-      'resolution_spec' : { 'type' :  'number', 'default' :      8                                                           },
+      'resolution_id'     : { 'type' :  'string', 'default' :  'max', 'enum' : [  'bit', 'min', 'max' ]                        },
+      'resolution_spec'   : { 'type' :  'number', 'default' :      8                                                           },
 
-          'period_id'   : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'auto', 'interval', 'frequency', 'duration' ] },
-          'period_spec' : { 'type' :  'number', 'default' :      0                                                           },
+          'period_id'     : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'auto', 'interval', 'frequency', 'duration' ] },
+          'period_spec'   : { 'type' :  'number', 'default' :      0                                                           },
 
-      'type'            : { 'type' :  'string', 'default' :  '<f8',  'enum' : [ '<f4', '<f8' ]                               },
-      'count'           : { 'type' :  'number', 'default' :      1                                                           }
+       'calibrate_trials' : { 'type' :  'number', 'default' :     10                                                           },
+       'calibrate_margin' : { 'type' :  'number', 'default' :     10                                                           },
+
+      'type'              : { 'type' :  'string', 'default' :  '<f8',  'enum' : [ '<f4', '<f8' ]                               },
+      'count'             : { 'type' :  'number', 'default' :      1                                                           }
     }, 'required' : [] }
   },
   'type' : 'object', 'default' : {}, 'properties' : {
