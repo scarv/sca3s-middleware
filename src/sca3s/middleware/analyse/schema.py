@@ -16,8 +16,8 @@ MANIFEST_ACK = {
   },
   'type' : 'object', 'default' : {}, 'properties' : {
     'status'         : { 'type' :  'string'                                                           },
-    'result'         : { 'type' :  'object'                                                           }
-  }
+    'result'         : { 'type' :  'object', 'default' : {}                                           }
+  }, 'required' : [ 'status' ]
 }
 
 MANIFEST_REQ = {
@@ -36,6 +36,6 @@ MANIFEST_REQ = {
       'user_id'      : { 'type' : 'integer'                                                           },
    'contest_id'      : { 'type' :  'string'                                                           },
 
-     'trace_spec'    : { '$ref' : '#/definitions/trace_spec' }
-  }, 'required' : []
+     'trace_spec'    : { '$ref' : '#/definitions/trace_spec'                                          }
+  }, 'required' : [ 'job_version', 'job_id', 'user_id', 'trace_spec' ]
 }

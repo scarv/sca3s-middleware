@@ -16,8 +16,8 @@ MANIFEST_ACK = {
   },
   'type' : 'object', 'default' : {}, 'properties' : {
     'status'         : { 'type' :  'string'                                                           },
-    'result'         : { 'type' :  'object'                                                           }
-  }
+    'result'         : { 'type' :  'object', 'default' : {}                                           }
+  }, 'required' : [ 'status' ]
 }
 
 MANIFEST_REQ = {
@@ -46,14 +46,14 @@ MANIFEST_REQ = {
       'user_id'      : { 'type' : 'integer'                                                           },
    'contest_id'      : { 'type' :  'string'                                                           },
 
+     'trace_spec'    : { '$ref' : '#/definitions/trace_spec'                                          },
+
     'driver_id'      : { 'type' :  'string'                                                           },
     'device_id'      : { 'type' :  'string'                                                           },
       
       'repo_id'      : { 'type' :  'string'                                                           },
-      'depo_id'      : { 'type' :  'string'                                                           },
-
-     'trace_spec'    : { '$ref' : '#/definitions/trace_spec' }
-  }, 'required' : [ 'job_version', 'job_id', 'user_id', 'driver_id', 'device_id', 'repo_id', 'depo_id', 'trace_spec' ],
+      'depo_id'      : { 'type' :  'string'                                                           }
+  }, 'required' : [ 'job_version', 'job_id', 'user_id', 'trace_spec', 'driver_id', 'device_id', 'repo_id', 'depo_id' ],
   'allOf' : [ {
     'oneOf' : [ { # options: driver_spec
       'properties' : {
