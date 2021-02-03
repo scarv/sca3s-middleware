@@ -15,14 +15,15 @@ MANIFEST_ACK = {
 
   },
   'type' : 'object', 'default' : {}, 'properties' : {
-    'status'         : { 'type' : 'integer'                                               }
+    'status'         : { 'type' :  'string'                                                           },
+    'result'         : { 'type' :  'object'                                                           }
   }
 }
 
 MANIFEST_REQ = {
   'definitions' : {
      'trace_spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
-      'resolution_id'     : { 'type' :  'string', 'default' :  'max', 'enum' : [  'bit', 'min', 'max' ]                        },
+      'resolution_id'     : { 'type' :  'string', 'default' :  'max', 'enum' : [ 'bit', 'min', 'max' ]                         },
       'resolution_spec'   : { 'type' :  'number', 'default' :      8                                                           },
 
           'period_id'     : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'auto', 'interval', 'frequency', 'duration' ] },
@@ -31,24 +32,25 @@ MANIFEST_REQ = {
        'calibrate_trials' : { 'type' :  'number', 'default' :     10                                                           },
        'calibrate_margin' : { 'type' :  'number', 'default' :     10                                                           },
 
-      'type'              : { 'type' :  'string', 'default' :  '<f8',  'enum' : [ '<f4', '<f8' ]                               },
+      'type'              : { 'type' :  'string', 'default' :  '<f8', 'enum' : [ '<f4', '<f8' ]                                },
       'count'             : { 'type' :  'number', 'default' :      1                                                           }
     }, 'required' : [] }
   },
   'type' : 'object', 'default' : {}, 'properties' : {
-    'status'         : { 'type' : 'string'                                                },
+    'status'         : { 'type' :  'string'                                                           },
 
-       'job_type'    : { 'type' : 'string', 'default' : 'user', 'enum' : [ 'user', 'ci' ] },
-       'job_version' : { 'type' : 'string'                                                },
-       'job_id'      : { 'type' : 'string'                                                },
+       'job_type'    : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user', 'ci', 'contest' ] },
+       'job_version' : { 'type' :  'string'                                                           },
+       'job_id'      : { 'type' :  'string'                                                           },
 
-      'user_id'      : { 'type' : 'integer'                                               },
+      'user_id'      : { 'type' : 'integer'                                                           },
+   'contest_id'      : { 'type' :  'string'                                                           },
 
-    'driver_id'      : { 'type' : 'string'                                                },
-    'device_id'      : { 'type' : 'string'                                                },
+    'driver_id'      : { 'type' :  'string'                                                           },
+    'device_id'      : { 'type' :  'string'                                                           },
       
-      'repo_id'      : { 'type' : 'string'                                                },
-      'depo_id'      : { 'type' : 'string'                                                },
+      'repo_id'      : { 'type' :  'string'                                                           },
+      'depo_id'      : { 'type' :  'string'                                                           },
 
      'trace_spec'    : { '$ref' : '#/definitions/trace_spec' }
   }, 'required' : [ 'job_version', 'job_id', 'user_id', 'driver_id', 'device_id', 'repo_id', 'depo_id', 'trace_spec' ],
