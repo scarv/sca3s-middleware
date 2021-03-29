@@ -42,9 +42,10 @@ class Status(enum.IntEnum):
     FAILURE_BE_JOB_PROLOGUE = encode(MODE_FAILURE, DOMAIN_BE, 0x0000)
     FAILURE_BE_JOB_PROCESS = encode(MODE_FAILURE, DOMAIN_BE, 0x0001)
     FAILURE_BE_JOB_EPILOGUE = encode(MODE_FAILURE, DOMAIN_BE, 0x0002)
-    # status values: front-end, job-related
+    # status values: front-end, job/contest-related
     FAILURE_FE_JOB_NOT_FOUND = encode(MODE_FAILURE, DOMAIN_FE, 0x0000)
     FAILURE_FE_JOB_INVALID = encode(MODE_FAILURE, DOMAIN_FE, 0x0001)
+    FAILURE_FE_CONTEST_NOT_FOUND = encode(MODE_FAILURE, DOMAIN_FE, 0x0002)
     # status values: front-end, API-related
     FAILURE_FE_API_QUEUE_EMPTY = encode(MODE_FAILURE, DOMAIN_FE, 0x0100)
     FAILURE_FE_API_QUEUE_FULL = encode(MODE_FAILURE, DOMAIN_FE, 0x0101)
