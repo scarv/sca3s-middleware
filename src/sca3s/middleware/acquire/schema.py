@@ -36,19 +36,19 @@ MANIFEST_REQ = {
     }, 'required' : [] }
   },
   'type' : 'object', 'default' : {}, 'properties' : {
-    'status'         : { 'type' : 'string'                                                },
+    'status'         : { 'type' :  'string'                                                },
 
-       'job_type'    : { 'type' : 'string', 'default' : 'user', 'enum' : [ 'user', 'ci' ] },
-       'job_version' : { 'type' : 'string'                                                },
-       'job_id'      : { 'type' : 'string'                                                },
+      'user_id'      : { 'type' : 'integer'                                                },
 
-      'user_id'      : { 'type' : 'integer'                                               },
+       'job_type'    : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user', 'ci' ] },
+       'job_id'      : { 'type' :  'string'                                                },
+       'job_version' : { 'type' :  'string'                                                },
 
-    'driver_id'      : { 'type' : 'string'                                                },
-    'device_id'      : { 'type' : 'string'                                                },
+    'driver_id'      : { 'type' :  'string'                                                },
+    'device_id'      : { 'type' :  'string'                                                },
       
-      'repo_id'      : { 'type' : 'string'                                                },
-      'depo_id'      : { 'type' : 'string'                                                },
+      'repo_id'      : { 'type' :  'string'                                                },
+      'depo_id'      : { 'type' :  'string'                                                },
 
      'trace_spec'    : { '$ref' : '#/definitions/trace_spec' }
   }, 'required' : [ 'job_version', 'job_id', 'user_id', 'driver_id', 'device_id', 'repo_id', 'depo_id', 'trace_spec' ],
