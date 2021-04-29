@@ -15,8 +15,8 @@ MANIFEST_ACK = {
 
   },
   'type' : 'object', 'default' : {}, 'properties' : {
-    'status'         : { 'type' :  'string'                                                           },
-    'result'         : { 'type' :  'object', 'default' : {}                                           }
+    'status'         : { 'type' :  'string'                                       },
+    'response'       : { 'type' :  'object', 'default' : {}                       }
   }, 'required' : [ 'status' ]
 }
 
@@ -37,23 +37,25 @@ MANIFEST_REQ = {
     }, 'required' : [] }
   },
   'type' : 'object', 'default' : {}, 'properties' : {
-    'status'         : { 'type' :  'string'                                                           },
+    'status'         : { 'type' :  'string'                                       },
 
-      'user_id'      : { 'type' : 'integer'                                                           },
-   'contest_id'      : { 'type' :  'string'                                                           },
+      'user_id'      : { 'type' : 'integer'                                       },
 
-       'job_type'    : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user', 'ci', 'contest' ] },
-       'job_id'      : { 'type' :  'string'                                                           },
-       'job_version' : { 'type' :  'string'                                                           },
+       'job_type'    : { 'type' :  'string', 'enum' : [ 'user', 'ci', 'contest' ] },
+       'job_id'      : { 'type' :  'string'                                       },
+       'job_version' : { 'type' :  'string'                                       },
 
-     'trace_spec'    : { '$ref' : '#/definitions/trace_spec'                                          },
+     'trace_spec'    : { '$ref' : '#/definitions/trace_spec'                      },
 
-    'driver_id'      : { 'type' :  'string'                                                           },
-    'device_id'      : { 'type' :  'string'                                                           },
+   'contest_id'      : { 'type' :  'string'                                       },
+   'contest_spec'    : { 'type' :  'object', 'default' : {}                       },
+
+    'driver_id'      : { 'type' :  'string'                                       },
+    'device_id'      : { 'type' :  'string'                                       },
       
-      'repo_id'      : { 'type' :  'string'                                                           },
-      'depo_id'      : { 'type' :  'string'                                                           }
-  }, 'required' : [ 'job_version', 'job_id', 'user_id', 'trace_spec', 'driver_id', 'device_id', 'repo_id', 'depo_id' ],
+      'repo_id'      : { 'type' :  'string'                                       },
+      'depo_id'      : { 'type' :  'string'                                       }
+  }, 'required' : [ 'user_id', 'job_type', 'job_id', 'job_version', 'trace_spec', 'driver_id', 'device_id', 'repo_id', 'depo_id' ],
   'allOf' : [ {
     'oneOf' : [ { # options: driver_spec
       'properties' : {
@@ -69,7 +71,7 @@ MANIFEST_REQ = {
             'user_select' : { 'type' :  'object', 'default' : {}, 'properties' : {
               'k' : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
               'm' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
-              'c' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
+              'c' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] }
             }, 'required' : [] },
             'user_value'  : { 'type' :  'object', 'default' : {}, 'properties' : {
               'k' : { 'type' : 'string', 'default' : '{$*|k|}'                          },
@@ -79,7 +81,7 @@ MANIFEST_REQ = {
           } }
         } },
          'trace_spec' : { 
-          'allOf' : [ { '$ref' : '#/definitions/trace_spec'  }, { 'properties' : { # extend  trace_spec w. driver_specific content options
+          'allOf' : [ { '$ref' : '#/definitions/trace_spec'  }, { 'properties' : { # extend trace_spec w. driver_specific content options
             'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'm', 'c', 'k' ], 'items' : {
               'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'r', 'k', 'm', 'c' ]
             } }
@@ -89,24 +91,30 @@ MANIFEST_REQ = {
     } ] }, { 
     'oneOf' : [ { # options:   repo_spec
       'properties' : {
-          'repo_id'   : { 'enum' : [ 'git' ] },
+          'repo_id'   : { 'enum' : [ 'git'  ] },
           'repo_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
-            'url'                     : { 'type' : 'string'                              },
-            'tag'                     : { 'type' : 'string', 'default' : 'master'        },
-            'conf'                    : { 'type' :  'array', 'default' : [], 'items' : {
+            'url'       : { 'type' : 'string'                              },
+            'tag'       : { 'type' : 'string', 'default' : 'master'        },
+
+            'conf'      : { 'type' :  'array', 'default' : [], 'items' : {
                 'type' : 'string'
             } }
-        }, 'required' : [ 'url' ] }
+        }, 'required' : [ 'url'  ] }
       }
     } ] }, { 
     'oneOf' : [ { # options:   depo_spec
       'properties' : {
-          'depo_id'   : { 'enum' : [ 's3' ] },
+          'depo_id'   : { 'enum' : [ 's3'   ] },
           'depo_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {  
-            'identity_id'             : { 'type' : 'string'                              },
-  
-              'region_id'             : { 'type' : 'string', 'default' : 'eu-west-1'     },
-              'bucket_id'             : { 'type' : 'string', 'default' : 'sca3s-acquire' }
+            'region_id' : { 'type' : 'string', 'default' : 'eu-west-1'     },
+            'bucket_id' : { 'type' : 'string', 'default' : 'sca3s-acquire' }
+        }, 'required' : [] }
+      }
+    }, {
+      'properties' : {
+          'depo_id'   : { 'enum' : [ 'null' ] },
+          'depo_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
+
         }, 'required' : [] }
       }
     } ] }
