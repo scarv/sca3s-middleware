@@ -59,15 +59,32 @@ MANIFEST_REQ = {
   'allOf' : [ {
     'oneOf' : [ { # options: driver_spec
       'properties' : {
-        'driver_id'   : { 'enum' : [ 'block' ] },
+        'driver_id'   : { 'enum' : [ 'function' ] }, # kernel = function
         'driver_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
-          'verify'      : { 'type' : 'boolean', 'default' : True                                },
-
+          'policy_id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user'         ] },
+          'policy_spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
+            'user_select' : { 'type' :  'object', 'default' : {}, 'properties' : {
+              'x' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] }
+            }, 'required' : [] },
+            'user_value'  : { 'type' :  'object', 'default' : {}, 'properties' : {
+              'x' : { 'type' : 'string', 'default' : '{$*|x|}'                          }
+            }, 'required' : [] }
+          } }
+        } },
+         'trace_spec' : { 
+          'allOf' : [ { '$ref' : '#/definitions/trace_spec'  }, { 'properties' : { # extend trace_spec w. driver_specific content options
+            'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'x', 'r' ], 'items' : {
+              'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'x', 'r' ]
+            } }
+          } } ]
+        }
+      }
+    }, {
+      'properties' : {
+        'driver_id'   : { 'enum' : [ 'block'    ] }, # kernel = block
+        'driver_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
           'policy_id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user', 'tvla' ] },
           'policy_spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
-            'tvla_mode'   : { 'type' :  'string', 'default' : 'fvr_d', 'enum' : [ 'fvr_k', 'fvr_d', 'svr_d', 'rvr_d' ] },
-            'tvla_round'  : { 'type' : 'integer', 'default' : 1                                                        },
-
             'user_select' : { 'type' :  'object', 'default' : {}, 'properties' : {
               'k' : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
               'm' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
@@ -78,7 +95,9 @@ MANIFEST_REQ = {
               'm' : { 'type' : 'string', 'default' : '{$*|m|}'                          },
               'c' : { 'type' : 'string', 'default' : '{$*|c|}'                          }
             }, 'required' : [] }
-          } }
+          } },
+
+          'verify'      : { 'type' : 'boolean', 'default' : True                                }
         } },
          'trace_spec' : { 
           'allOf' : [ { '$ref' : '#/definitions/trace_spec'  }, { 'properties' : { # extend trace_spec w. driver_specific content options
