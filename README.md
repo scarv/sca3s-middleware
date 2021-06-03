@@ -47,8 +47,16 @@ components (e.g., relating to interaction between front- and back-end).*
 
 <!--- -------------------------------------------------------------------- --->
 
-## Quickstart
+## Questions?
 
+- read the
+  [wiki](https://github.com/scarv/sca3s-middleware/wiki),
+- raise an
+  [issue](https://github.com/scarv/sca3s-middleware/issues),
+- raise a
+  [pull request](https://github.com/scarv/sca3s-middleware/pulls),
+- drop us an 
+  [email](mailto:sca3s@scarv.org).
 
 <!--- -------------------------------------------------------------------- --->
 
