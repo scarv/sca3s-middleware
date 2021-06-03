@@ -15,27 +15,26 @@ MANIFEST_ACK = {
 
   },
   'type' : 'object', 'default' : {}, 'properties' : {
-    'status'         : { 'type' :  'string'                                                           },
-    'result'         : { 'type' :  'object', 'default' : {}                                           }
+    'status'         : { 'type' :  'string'                                       },
+    'response'       : { 'type' :  'object', 'default' : {}                       }
   }, 'required' : [ 'status' ]
 }
 
 MANIFEST_REQ = {
   'definitions' : {
      'trace_spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
-      'url'               : { 'type' :  'string' }
+      'url' : { 'type' :  'string' }
     }, 'required' : [] }
   },
   'type' : 'object', 'default' : {}, 'properties' : {
-    'status'         : { 'type' :  'string'                                                           },
+    'status'         : { 'type' :  'string'                                       },
 
-       'job_type'    : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user', 'ci', 'contest' ] },
-       'job_version' : { 'type' :  'string'                                                           },
-       'job_id'      : { 'type' :  'string'                                                           },
+      'user_id'      : { 'type' : 'integer'                                       },
 
-      'user_id'      : { 'type' : 'integer'                                                           },
-   'contest_id'      : { 'type' :  'string'                                                           },
+       'job_type'    : { 'type' :  'string', 'enum' : [ 'user', 'ci', 'contest' ] },
+       'job_id'      : { 'type' :  'string'                                       },
+       'job_version' : { 'type' :  'string'                                       },
 
-     'trace_spec'    : { '$ref' : '#/definitions/trace_spec'                                          }
-  }, 'required' : [ 'job_version', 'job_id', 'user_id', 'trace_spec' ]
+     'trace_spec'    : { '$ref' : '#/definitions/trace_spec'                      }
+  }, 'required' : [ 'user_id', 'job_type', 'job_id', 'job_version', 'trace_spec' ]
 }
