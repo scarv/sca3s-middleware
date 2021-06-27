@@ -6,24 +6,65 @@
 
 import json, jsonschema
 
-# This function is taken more or less verbatim from the FAQ in [1]: it acts
-# to recursively apply default values to a given schema instances (wrt. the 
-# associated schema), before validating it.
+# In the jsonschema FAQ [1], there's a recipe which extends a validator with
+# the ability to (recursively) apply the default values in a given schema to
+# an associated instance *before* then validating it.  On the whole, this is
+# good enough for most purposes; it fails, however, for allOf, oneOf, etc.
+# The function populate is a limited replacement therefore.  It's basic, and
+# so likely only useful for the specific schema and idioms we use, but does
+# the right thing in the cases the jsonschema recipe doesn't.
 #
-# [1] https://python-jsonschema.readthedocs.io
+# [1] https://python-jsonschema.readthedocs.io/en/stable/faq
 
-def validate( instance, schema ) :
-  def defaults( validator_class ) :
-    validate_properties = validator_class.VALIDATORS[ 'properties' ]
+def validate( schema, instance ) :
+  jsonschema.Draft7Validator( schema ).validate( instance )
 
-    def set_defaults( validator, properties, instance, schema ) :
-      for ( property, subschema ) in properties.items() :
-        if ( 'default' in subschema ) :
-          instance.setdefault( property, subschema[ 'default' ] )
+def populate( schema, instance, definitions = dict() ) :
+  for key in schema.keys() :
+    # remember definitions for later use
 
-      for error in validate_properties( validator, properties, instance, schema ):
-        yield error
+    if   ( key == 'definitions' ) :
+      definitions = schema[ key ]
 
-    return jsonschema.validators.extend( validator_class, { 'properties' : set_defaults } )
+    # base cases
 
-  validator = defaults( jsonschema.Draft7Validator ) ; validator( schema ).validate( instance )
+    elif ( key == 'type'        ) :
+      pass
+    elif ( key == 'default'     ) :
+      pass
+    elif ( key == 'required'    ) :
+      pass
+
+    # more complex recursive cases
+
+    elif ( key == 'allOf'       ) :
+      for subschema in schema[ key ] :
+          populate( subschema, instance, definitions = definitions )
+    elif ( key == 'oneOf'       ) :
+      for subschema in schema[ key ] :
+        if ( jsonschema.Draft7Validator( { 'definitions' : definitions, **subschema } ).is_valid( instance ) ) :
+          populate( subschema, instance, definitions = definitions )
+
+    # less complex recursive cases
+
+    elif ( key == '$ref'        ) : 
+      _schema   = definitions[ schema[ key ][ len( '#/definitions/' ) : ] ]
+      _instance = instance
+
+      populate( _schema, _instance, definitions = definitions )
+    elif ( key == 'properties'  ) :
+      _schema   =              schema[ key ]
+      _instance = instance
+
+      populate( _schema, _instance, definitions = definitions )
+
+    # default case
+
+    else :
+      if ( not ( key in instance ) ) :
+        if ( 'default' in schema[ key ] ) :
+          instance[ key ] = schema[ key ][ 'default' ]
+
+      if (       key in instance   ) :
+        populate( schema[ key ], instance[ key ], definitions = definitions )
+

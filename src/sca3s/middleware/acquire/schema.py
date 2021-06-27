@@ -54,11 +54,67 @@ MANIFEST_REQ = {
     'device_id'      : { 'type' :  'string'                                       },
       
       'repo_id'      : { 'type' :  'string'                                       },
-      'depo_id'      : { 'type' :  'string'                                       }
+      'depo_id'      : { 'type' :  'string'                                       },
   }, 'required' : [ 'user_id', 'job_type', 'job_id', 'job_version', 'trace_spec', 'driver_id', 'device_id', 'repo_id', 'depo_id' ],
   'allOf' : [ {
     'oneOf' : [ { # options: driver_spec
-      'properties' : {
+      'type' : 'object', 'default' : {}, 'properties' : {    
+        'driver_id'   : { 'enum' : [ 'aead'     ] }, # kernel = aead
+        'driver_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
+          'policy_id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user'         ] },
+          'policy_spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
+            'user_select' : { 'type' :  'object', 'default' : {}, 'properties' : {
+              'k' : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
+              'a' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
+              'm' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
+              'c' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] }
+            }, 'required' : [] },
+            'user_value'  : { 'type' :  'object', 'default' : {}, 'properties' : {
+              'k' : { 'type' : 'string', 'default' : '{$*|k|}'                          },
+              'a' : { 'type' : 'string', 'default' : '{$*|a|}'                          },
+              'm' : { 'type' : 'string', 'default' : '{$*|m|}'                          },
+              'c' : { 'type' : 'string', 'default' : '{$*|c|}'                          }
+            }, 'required' : [] }
+          } }
+        } },
+         'trace_spec' : { 
+          'allOf' : [ { '$ref' : '#/definitions/trace_spec'  }, { 'properties' : { # extend trace_spec w. driver_specific content options
+            'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'k', 'a', 'm', 'c' ], 'items' : {
+              'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'k', 'a', 'm', 'c' ]
+            } }
+          } } ]
+        }
+      }
+    }, {
+      'type' : 'object', 'default' : {}, 'properties' : {    
+        'driver_id'   : { 'enum' : [ 'block'    ] }, # kernel = block
+        'driver_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
+          'policy_id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user', 'tvla' ] },
+          'policy_spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
+            'user_select' : { 'type' :  'object', 'default' : {}, 'properties' : {
+              'k' : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
+              'm' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
+              'c' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] }
+            }, 'required' : [] },
+            'user_value'  : { 'type' :  'object', 'default' : {}, 'properties' : {
+              'k' : { 'type' : 'string', 'default' : '{$*|k|}'                          },
+              'm' : { 'type' : 'string', 'default' : '{$*|m|}'                          },
+              'c' : { 'type' : 'string', 'default' : '{$*|c|}'                          }
+            }, 'required' : [] }
+          } },
+
+          'verify'      : { 'type' : 'boolean', 'default' : True                                }
+        } },
+         'trace_spec' : { 
+          'allOf' : [ { '$ref' : '#/definitions/trace_spec'  }, { 'properties' : { # extend trace_spec w. driver_specific content options
+            'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'k',      'm', 'c' ], 'items' : {
+              'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'k',      'm', 'c' ]
+            } }
+          } } ]
+        }
+      }
+    }, {
+      'type' : 'object', 'default' : {}, 'properties' : {    
         'driver_id'   : { 'enum' : [ 'function' ] }, # kernel = function
         'driver_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
           'policy_id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user'         ] },
@@ -80,36 +136,31 @@ MANIFEST_REQ = {
         }
       }
     }, {
-      'properties' : {
-        'driver_id'   : { 'enum' : [ 'block'    ] }, # kernel = block
+      'type' : 'object', 'default' : {}, 'properties' : {    
+        'driver_id'   : { 'enum' : [ 'hash'     ] }, # kernel = hash
         'driver_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
-          'policy_id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user', 'tvla' ] },
+          'policy_id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user'         ] },
           'policy_spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
             'user_select' : { 'type' :  'object', 'default' : {}, 'properties' : {
-              'k' : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
-              'm' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
-              'c' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] }
+              'm' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] }
             }, 'required' : [] },
             'user_value'  : { 'type' :  'object', 'default' : {}, 'properties' : {
-              'k' : { 'type' : 'string', 'default' : '{$*|k|}'                          },
-              'm' : { 'type' : 'string', 'default' : '{$*|m|}'                          },
-              'c' : { 'type' : 'string', 'default' : '{$*|c|}'                          }
+              'm' : { 'type' : 'string', 'default' : '{$*|m|}'                          }
             }, 'required' : [] }
-          } },
-
-          'verify'      : { 'type' : 'boolean', 'default' : True                                }
+          } }
         } },
          'trace_spec' : { 
           'allOf' : [ { '$ref' : '#/definitions/trace_spec'  }, { 'properties' : { # extend trace_spec w. driver_specific content options
-            'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'm', 'c', 'k' ], 'items' : {
-              'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'r', 'k', 'm', 'c' ]
+            'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'm', 'd' ], 'items' : {
+              'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'm', 'd' ]
             } }
           } } ]
         }
       }
-    } ] }, { 
+    } ] 
+  }, { 
     'oneOf' : [ { # options:   repo_spec
-      'properties' : {
+      'type' : 'object', 'default' : {}, 'properties' : {
           'repo_id'   : { 'enum' : [ 'git'  ] },
           'repo_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
             'url'       : { 'type' : 'string'                              },
@@ -120,9 +171,10 @@ MANIFEST_REQ = {
             } }
         }, 'required' : [ 'url'  ] }
       }
-    } ] }, { 
+    } ] 
+  }, { 
     'oneOf' : [ { # options:   depo_spec
-      'properties' : {
+      'type' : 'object', 'default' : {}, 'properties' : {
           'depo_id'   : { 'enum' : [ 's3'   ] },
           'depo_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {  
             'region_id' : { 'type' : 'string', 'default' : 'eu-west-1'     },
@@ -130,12 +182,12 @@ MANIFEST_REQ = {
         }, 'required' : [] }
       }
     }, {
-      'properties' : {
+      'type' : 'object', 'default' : {}, 'properties' : {
           'depo_id'   : { 'enum' : [ 'null' ] },
           'depo_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
-
+            'foo' : { 'type' : 'string', 'default' : 'bar' }
         }, 'required' : [] }
       }
-    } ] }
-  ]
+    } ] 
+  } ]
 }
