@@ -22,7 +22,8 @@ MANIFEST_ACK = {
 
 MANIFEST_REQ = {
   'definitions' : {
-     'trace_spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
+    # trace spec.  generic fields
+    'trace_spec_generic'           : { 'type' :  'object', 'default' : {}, 'properties' : {
       'resolution_id'     : { 'type' :  'string', 'default' :  'max', 'enum' : [ 'bit', 'min', 'max' ]                         },
       'resolution_spec'   : { 'type' :  'number', 'default' :      8                                                           },
 
@@ -34,7 +35,31 @@ MANIFEST_REQ = {
 
       'type'              : { 'type' :  'string', 'default' :  '<f8', 'enum' : [ '<f4', '<f8' ]                                },
       'count'             : { 'type' :  'number', 'default' :      1                                                           }
-    }, 'required' : [] }
+    }, 'required' : [] },
+    # trace spec. specific fields: kernel = aead     
+    'trace_spec_specific_aead'     : { 'type' :  'object', 'default' : {}, 'properties' : {
+      'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'k', 'a', 'm', 'c' ], 'items' : {
+        'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'k', 'a', 'm', 'c' ]
+      } }
+    } },
+    # trace spec. specific fields: kernel = block    
+    'trace_spec_specific_block'    : { 'type' :  'object', 'default' : {}, 'properties' : {
+      'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'k',      'm', 'c' ], 'items' : {
+        'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'k',      'm', 'c' ]
+      } }
+    } },
+    # trace spec. specific fields: kernel = function 
+    'trace_spec_specific_function' : { 'type' :  'object', 'default' : {}, 'properties' : {
+      'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'x', 'r'           ], 'items' : {
+        'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'x', 'r'           ]
+      } }
+    } },
+    # trace spec. specific fields: kernel = hash     
+    'trace_spec_specific_hash'     : { 'type' :  'object', 'default' : {}, 'properties' : {
+      'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'm', 'd'           ], 'items' : {
+        'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'm', 'd'           ]
+      } }
+    } }
   },
   'type' : 'object', 'default' : {}, 'properties' : {
     'status'         : { 'type' :  'string'                                       },
@@ -44,8 +69,6 @@ MANIFEST_REQ = {
        'job_type'    : { 'type' :  'string', 'enum' : [ 'user', 'ci', 'contest' ] },
        'job_id'      : { 'type' :  'string'                                       },
        'job_version' : { 'type' :  'string'                                       },
-
-     'trace_spec'    : { '$ref' : '#/definitions/trace_spec'                      },
 
    'contest_id'      : { 'type' :  'string'                                       },
    'contest_spec'    : { 'type' :  'object', 'default' : {}                       },
@@ -78,11 +101,7 @@ MANIFEST_REQ = {
           } }
         } },
          'trace_spec' : { 
-          'allOf' : [ { '$ref' : '#/definitions/trace_spec'  }, { 'properties' : { # extend trace_spec w. driver_specific content options
-            'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'k', 'a', 'm', 'c' ], 'items' : {
-              'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'k', 'a', 'm', 'c' ]
-            } }
-          } } ]
+          'allOf' : [ { '$ref' : '#/definitions/trace_spec_generic' }, { '$ref' : '#/definitions/trace_spec_specific_aead'     } ]
         }
       }
     }, {
@@ -101,16 +120,10 @@ MANIFEST_REQ = {
               'm' : { 'type' : 'string', 'default' : '{$*|m|}'                          },
               'c' : { 'type' : 'string', 'default' : '{$*|c|}'                          }
             }, 'required' : [] }
-          } },
-
-          'verify'      : { 'type' : 'boolean', 'default' : True                                }
+          } }
         } },
          'trace_spec' : { 
-          'allOf' : [ { '$ref' : '#/definitions/trace_spec'  }, { 'properties' : { # extend trace_spec w. driver_specific content options
-            'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'k',      'm', 'c' ], 'items' : {
-              'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'k',      'm', 'c' ]
-            } }
-          } } ]
+          'allOf' : [ { '$ref' : '#/definitions/trace_spec_generic' }, { '$ref' : '#/definitions/trace_spec_specific_block'    } ]
         }
       }
     }, {
@@ -128,11 +141,7 @@ MANIFEST_REQ = {
           } }
         } },
          'trace_spec' : { 
-          'allOf' : [ { '$ref' : '#/definitions/trace_spec'  }, { 'properties' : { # extend trace_spec w. driver_specific content options
-            'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'x', 'r' ], 'items' : {
-              'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'x', 'r' ]
-            } }
-          } } ]
+          'allOf' : [ { '$ref' : '#/definitions/trace_spec_generic' }, { '$ref' : '#/definitions/trace_spec_specific_function' } ]
         }
       }
     }, {
@@ -150,11 +159,7 @@ MANIFEST_REQ = {
           } }
         } },
          'trace_spec' : { 
-          'allOf' : [ { '$ref' : '#/definitions/trace_spec'  }, { 'properties' : { # extend trace_spec w. driver_specific content options
-            'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'm', 'd' ], 'items' : {
-              'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'm', 'd' ]
-            } }
-          } } ]
+          'allOf' : [ { '$ref' : '#/definitions/trace_spec_generic' }, { '$ref' : '#/definitions/trace_spec_specific_hash'     } ]
         }
       }
     } ] 
