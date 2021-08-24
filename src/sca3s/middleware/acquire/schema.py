@@ -38,26 +38,26 @@ MANIFEST_REQ = {
     }, 'required' : [] },
     # trace spec. specific fields: kernel = aead     
     'trace_spec_specific_aead'     : { 'type' :  'object', 'default' : {}, 'properties' : {
-      'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'k', 'a', 'm', 'c' ], 'items' : {
-        'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'k', 'a', 'm', 'c' ]
+      'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'data/k', 'data/usedof_k', 'data/n', 'data/usedof_n', 'data/a', 'data/usedof_a', 'data/m', 'data/usedof_m', 'data/c', 'data/usedof_c' ], 'items' : {
+        'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'data/k', 'data/usedof_k', 'data/n', 'data/usedof_n', 'data/a', 'data/usedof_a', 'data/m', 'data/usedof_m', 'data/c', 'data/usedof_c' ]
       } }
     } },
     # trace spec. specific fields: kernel = block    
     'trace_spec_specific_block'    : { 'type' :  'object', 'default' : {}, 'properties' : {
-      'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'k',      'm', 'c' ], 'items' : {
-        'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'k',      'm', 'c' ]
+      'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'data/k', 'data/usedof_k',                                                       'data/m', 'data/usedof_m', 'data/c', 'data/usedof_c' ], 'items' : {
+        'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'data/k', 'data/usedof_k',                                                       'data/m', 'data/usedof_m', 'data/c', 'data/usedof_c' ]
       } }
     } },
     # trace spec. specific fields: kernel = function 
     'trace_spec_specific_function' : { 'type' :  'object', 'default' : {}, 'properties' : {
-      'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'x', 'r'           ], 'items' : {
-        'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'x', 'r'           ]
+      'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'data/x', 'data/usedof_x', 'data/r', 'data/usedof_r' ], 'items' : {
+        'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'data/x', 'data/usedof_x', 'data/r', 'data/usedof_r' ]
       } }
     } },
     # trace spec. specific fields: kernel = hash     
     'trace_spec_specific_hash'     : { 'type' :  'object', 'default' : {}, 'properties' : {
-      'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'm', 'd'           ], 'items' : {
-        'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'm', 'd'           ]
+      'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'data/m', 'data/usedof_m', 'data/d', 'data/usedof_d' ], 'items' : {
+        'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'data/m', 'data/usedof_m', 'data/d', 'data/usedof_d' ]
       } }
     } }
   },
@@ -88,12 +88,14 @@ MANIFEST_REQ = {
           'policy_spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
             'user_select' : { 'type' :  'object', 'default' : {}, 'properties' : {
               'k' : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
+              'n' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
               'a' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
               'm' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
               'c' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] }
             }, 'required' : [] },
             'user_value'  : { 'type' :  'object', 'default' : {}, 'properties' : {
               'k' : { 'type' : 'string', 'default' : '{$*|k|}'                          },
+              'n' : { 'type' : 'string', 'default' : '{$*|n|}'                          },
               'a' : { 'type' : 'string', 'default' : '{$*|a|}'                          },
               'm' : { 'type' : 'string', 'default' : '{$*|m|}'                          },
               'c' : { 'type' : 'string', 'default' : '{$*|c|}'                          }
