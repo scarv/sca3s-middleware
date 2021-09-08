@@ -66,6 +66,27 @@ def patch_contest(data):
         raise OKException(Status.FAILURE_FE_API_SCHEMA_MISMATCH)
 
 
+def patch_manifests(data, drivers):
+    """
+    Validator for the patch manifests api endpoint.
+    """
+    schema = {
+        "type": "object",
+        "properties": {
+            'id' : {'type':'string'},
+            'manifests': {'type': 'object'}
+        },
+        "additionalProperties": False,
+        "required": ['manifests']
+    }
+    try:
+        jsonschema.validate(data, schema)
+        if list(data['manifests'].keys()) != drivers:
+            raise
+    except Exception:
+        raise OKException(Status.FAILURE_FE_API_SCHEMA_MISMATCH)
+
+
 def delete_contest(data):
     """
     Validator for the delete contest api endpoint.
