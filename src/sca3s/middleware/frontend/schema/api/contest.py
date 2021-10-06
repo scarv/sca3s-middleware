@@ -81,7 +81,7 @@ def patch_manifests(data, drivers):
     }
     try:
         jsonschema.validate(data, schema)
-        if list(data['manifests'].keys()) != drivers:
+        if set(data['manifests'].keys()) != drivers:
             raise
     except Exception:
         raise OKException(Status.FAILURE_FE_API_SCHEMA_MISMATCH)
