@@ -114,8 +114,11 @@ MANIFEST_REQ = {
       'type' : 'object', 'default' : {}, 'properties' : {    
         'driver_id'   : { 'enum' : [ 'aead'     ] }, # kernel = aead
         'driver_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
-          'policy_id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user'         ] },
+          'policy_id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user', 'tvla' ] },
           'policy_spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
+            'tvla_mode'   : { 'type' :  'string', 'default' : 'fvr_d', 'enum' : [ 'fvr_k', 'fvr_d', 'svr_d', 'rvr_d' ] },
+            'tvla_round'  : { 'type' : 'integer', 'default' : 1                                                        },
+
             'user_select' : { 'type' :  'object', 'default' : {}, 'properties' : {
               'k'  : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
               'n'  : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
@@ -142,6 +145,9 @@ MANIFEST_REQ = {
         'driver_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
           'policy_id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user', 'tvla' ] },
           'policy_spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
+            'tvla_mode'   : { 'type' :  'string', 'default' : 'fvr_d', 'enum' : [ 'fvr_k', 'fvr_d', 'svr_d', 'rvr_d' ] },
+            'tvla_round'  : { 'type' : 'integer', 'default' : 1                                                        },
+
             'user_select' : { 'type' :  'object', 'default' : {}, 'properties' : {
               'k'  : { 'type' : 'string', 'default' :  'all', 'enum' : [ 'all', 'each' ] },
               'm'  : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
@@ -162,8 +168,11 @@ MANIFEST_REQ = {
       'type' : 'object', 'default' : {}, 'properties' : {    
         'driver_id'   : { 'enum' : [ 'function' ] }, # kernel = function
         'driver_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
-          'policy_id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user'         ] },
+          'policy_id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user', 'tvla' ] },
           'policy_spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
+            'tvla_mode'   : { 'type' :  'string', 'default' : 'fvr_d', 'enum' : [ 'fvr_k', 'fvr_d', 'svr_d', 'rvr_d' ] },
+            'tvla_round'  : { 'type' : 'integer', 'default' : 1                                                        },
+
             'user_select' : { 'type' :  'object', 'default' : {}, 'properties' : {
               'x0' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
               'x1' : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] },
@@ -194,8 +203,11 @@ MANIFEST_REQ = {
       'type' : 'object', 'default' : {}, 'properties' : {    
         'driver_id'   : { 'enum' : [ 'hash'     ] }, # kernel = hash
         'driver_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
-          'policy_id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user'         ] },
+          'policy_id'   : { 'type' :  'string', 'default' : 'user', 'enum' : [ 'user', 'tvla' ] },
           'policy_spec' : { 'type' :  'object', 'default' : {}, 'properties' : {
+            'tvla_mode'   : { 'type' :  'string', 'default' : 'fvr_d', 'enum' : [ 'fvr_k', 'fvr_d', 'svr_d', 'rvr_d' ] },
+            'tvla_round'  : { 'type' : 'integer', 'default' : 1                                                        },
+
             'user_select' : { 'type' :  'object', 'default' : {}, 'properties' : {
               'm'  : { 'type' : 'string', 'default' : 'each', 'enum' : [ 'all', 'each' ] }
             }, 'required' : [] },
