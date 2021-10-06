@@ -94,11 +94,11 @@ MANIFEST_REQ = {
   'type' : 'object', 'default' : {}, 'properties' : {
     'status'         : { 'type' :  'string'                                       },
 
-      'user_id'      : { 'type' : 'integer'                                       },
-
-       'job_type'    : { 'type' :  'string', 'enum' : [ 'user', 'ci', 'contest' ] },
        'job_id'      : { 'type' :  'string'                                       },
+       'job_type'    : { 'type' :  'string', 'enum' : [ 'user', 'ci', 'contest' ] },
        'job_version' : { 'type' :  'string'                                       },
+
+      'user_id'      : { 'type' : 'integer'                                       },
 
    'contest_id'      : { 'type' :  'string'                                       },
    'contest_spec'    : { 'type' :  'object', 'default' : {}                       },

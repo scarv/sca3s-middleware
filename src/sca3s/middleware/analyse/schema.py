@@ -29,11 +29,11 @@ MANIFEST_REQ = {
   'type' : 'object', 'default' : {}, 'properties' : {
     'status'         : { 'type' :  'string'                                       },
 
-      'user_id'      : { 'type' : 'integer'                                       },
-
-       'job_type'    : { 'type' :  'string', 'enum' : [ 'user', 'ci', 'contest' ] },
        'job_id'      : { 'type' :  'string'                                       },
+       'job_type'    : { 'type' :  'string', 'enum' : [ 'user', 'ci', 'contest' ] },
        'job_version' : { 'type' :  'string'                                       },
+
+      'user_id'      : { 'type' : 'integer'                                       },
 
      'trace_spec'    : { '$ref' : '#/definitions/trace_spec'                      }
   }, 'required' : [ 'user_id', 'job_type', 'job_id', 'job_version', 'trace_spec' ]
