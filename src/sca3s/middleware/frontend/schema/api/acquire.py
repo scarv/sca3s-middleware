@@ -24,7 +24,12 @@ def advertise(data):
                     'board_desc': {"type": "string", "minLength" : 1},
                     'scope_id': {"type": "string", "minLength" : 1},
                     'scope_desc': {"type": "string", "minLength" : 1},
-                    'role' : {"type": "string", "minLength" : 1}
+                    'role' : {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
                 },
                 "additionalProperties": False,
                 "required": ['board_id', 'scope_id']
