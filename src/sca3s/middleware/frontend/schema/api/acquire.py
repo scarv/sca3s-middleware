@@ -19,16 +19,15 @@ def advertise(data):
         "properties": {
             'devices': {
                 'type': 'object',
-                "properties": {},
-                "additionalProperties": {
-                    'type' : 'object',
-                    'properties' : {
-                        'board_id': {"type": "string", "minLength" : 1},
-                        'board_desc': {"type": "string", "minLength" : 1},
-                        'scope_id': {"type": "string", "minLength" : 1},
-                        'scope_desc': {"type": "string", "minLength" : 1}
-                    }
-                }
+                "properties": {
+                    'board_id': {"type": "string", "minLength" : 1},
+                    'board_desc': {"type": "string", "minLength" : 1},
+                    'scope_id': {"type": "string", "minLength" : 1},
+                    'scope_desc': {"type": "string", "minLength" : 1},
+                    'role' : {"type": "string", "minLength" : 1}
+                },
+                "additionalProperties": False,
+                "required": ['board_id', 'scope_id']
             },
             'queue': {
                 'type': 'integer',
