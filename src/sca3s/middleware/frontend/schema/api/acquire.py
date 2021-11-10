@@ -19,20 +19,24 @@ def advertise(data):
         "properties": {
             'devices': {
                 'type': 'object',
-                "properties": {
-                    'board_id': {"type": "string", "minLength" : 1},
-                    'board_desc': {"type": "string", "minLength" : 1},
-                    'scope_id': {"type": "string", "minLength" : 1},
-                    'scope_desc': {"type": "string", "minLength" : 1},
-                    'role' : {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
+                "properties": {},
+                # Additional properties used because device_id is the JSON key
+                "additionalProperties": {
+                    "type" : "object",
+                    "properties": {
+                        'board_id': {"type": "string", "minLength": 1},
+                        'board_desc': {"type": "string", "minLength": 1},
+                        'scope_id': {"type": "string", "minLength": 1},
+                        'scope_desc': {"type": "string", "minLength": 1},
+                        'role': {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
                         }
-                    }
-                },
-                "additionalProperties": False,
-                "required": ['board_id', 'scope_id']
+                    },
+                    "required": ['board_id', 'scope_id']
+                }
             },
             'queue': {
                 'type': 'integer',
