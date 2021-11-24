@@ -4,11 +4,13 @@
 # can be found at https://opensource.org/licenses/MIT (or should be included
 # as LICENSE.txt within the associated archive or repository).
 
-import enum, re
+import enum
+import re
 
 # status modes
 MODE_SUCCESS = 0x0
 MODE_FAILURE = 0x1
+MODE_PENDING = 0x2
 
 # status domain separators
 DOMAIN_GENERIC = 0x0
@@ -18,7 +20,7 @@ DOMAIN_FE = 0x2
 
 class Status(enum.IntEnum):
     def encode(mode, domain, value):
-        return ((mode & 0x1) << 31) | ((domain & 0x7) << 28) | ((value & 0xFFFF) << 0)
+        return ((mode & 0x3) << 30) | ((domain & 0x3) << 28) | ((value & 0xFFFF) << 0)
 
     @staticmethod
     def build(value):
@@ -38,6 +40,9 @@ class Status(enum.IntEnum):
 
     # status values: generic
     SUCCESS = encode(MODE_SUCCESS, DOMAIN_GENERIC, 0x0000)
+    # status values: generic, job related
+    PENDING_JOB_EXECUTION = encode(MODE_PENDING, DOMAIN_GENERIC, 0x0100)
+    PENDING_JOB_COMPLETION = encode(MODE_PENDING, DOMAIN_GENERIC, 0x0101)
     # status values:  back-end
     FAILURE_BE_JOB_PROLOGUE = encode(MODE_FAILURE, DOMAIN_BE, 0x0000)
     FAILURE_BE_JOB_PROCESS = encode(MODE_FAILURE, DOMAIN_BE, 0x0001)
@@ -59,11 +64,15 @@ class Status(enum.IntEnum):
     FAILURE_FE_GITHUB_UNACTIONABLE_EVENT = encode(MODE_FAILURE, DOMAIN_FE, 0x0300)
     FAILURE_FE_GITHUB_NO_CONFIG_FILE = encode(MODE_FAILURE, DOMAIN_FE, 0x0301)
     FAILURE_FE_GITHUB_INSTALLATION_TOKEN = encode(MODE_FAILURE, DOMAIN_FE, 0x0302)
+
     def is_success(self):
-        return ((self.value >> 31) & 0x1) == MODE_SUCCESS
+        return ((self.value >> 30) & 0x3) == MODE_SUCCESS
 
     def is_failure(self):
-        return ((self.value >> 31) & 0x1) == MODE_FAILURE
+        return ((self.value >> 30) & 0x3) == MODE_FAILURE
+
+    def is_pending(self):
+        return ((self.value >> 30) & 0x3) == MODE_PENDING
 
     def describe(self):
         if (self.value == self.SUCCESS):
