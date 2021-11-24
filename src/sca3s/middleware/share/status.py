@@ -70,24 +70,23 @@ class Status(enum.IntEnum):
             t = 'success'
 
         elif (self.value == self.FAILURE_BE_JOB_PROLOGUE):
-            t = 'job failed during processing prologue (before processing, e.g.,   allocation of resources)'
+            t = 'Job failed during processing prologue (before processing, e.g. allocation of resources)'
         elif (self.value == self.FAILURE_BE_JOB_PROCESS):
-            t = 'job failed during processing'
+            t = 'Job failed during processing'
         elif (self.value == self.FAILURE_BE_JOB_EPILOGUE):
-            t = 'job failed during processing epilogue (after  processing, e.g., deallocation of resources)'
-
+            t = 'Job failed during processing epilogue (after  processing, e.g. deallocation of resources)'
         elif (self.value == self.FAILURE_FE_JOB_UNKNOWN):
-            t = ''
+            t = 'Job suffered an unknown failure on the frontend'
         elif (self.value == self.FAILURE_FE_JOB_INVALID):
-            t = ''
+            t = 'Job is invalid'
         elif (self.value == self.FAILURE_FE_API_QUEUE_EMPTY):
-            t = ''
+            t = 'The queue is empty and the job cannot be retrieved'
         elif (self.value == self.FAILURE_FE_API_QUEUE_FULL):
-            t = ''
+            t = 'The queue is full and the job cannot be submitted'
         elif (self.value == self.FAILURE_FE_AWS_AUTH):
-            t = ''
+            t = 'AWS authentication failed'
         elif (self.value == self.FAILURE_FE_AWS_URL):
-            t = ''
+            t = 'AWS storage URL generation failed'
 
         return re.sub(r'\s\s+', ' ', t)
 
