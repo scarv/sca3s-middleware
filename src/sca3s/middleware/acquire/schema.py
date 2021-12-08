@@ -24,20 +24,20 @@ MANIFEST_REQ = {
   'definitions' : {
     # trace spec.  generic fields
     'trace_spec_generic'           : { 'type' :  'object', 'default' : {}, 'properties' : {
-        'duration_id'     : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'user', 'auto'       ]                        },
-        'duration_spec'   : { 'type' :  'number'                                                                               },
-        'interval_id'     : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'user', 'auto'       ]                        },
-        'interval_spec'   : { 'type' :  'number'                                                                               },
-      'resolution_id'     : { 'type' :  'string', 'default' :  'max', 'enum' : [ 'user', 'min', 'max' ]                        },
-      'resolution_spec'   : { 'type' :  'number'                                                                               },
+      'resolution_id'     : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'user', 'auto', 'max', 'min' ] },
+      'resolution_spec'   : { 'type' :  'number'                                                                },
+        'duration_id'     : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'user', 'auto'               ] },
+        'duration_spec'   : { 'type' :  'number'                                                                },
+        'interval_id'     : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'user', 'auto'               ] },
+        'interval_spec'   : { 'type' :  'number'                                                                },
 
-       'calibrate_trials' : { 'type' :  'number', 'default' :     10                                                           },
-       'calibrate_margin' : { 'type' :  'number', 'default' :     10                                                           },
+       'calibrate_trials' : { 'type' :  'number', 'default' :     10                                            },
+       'calibrate_margin' : { 'type' :  'number', 'default' :     10                                            },
 
-      'type'              : { 'type' :  'string', 'default' :  '<f8', 'enum' : [ '<f4', '<f8' ]                                },
+      'type'              : { 'type' :  'string', 'default' :  '<f8', 'enum' : [ '<f4', '<f8' ]                 },
 
-      'count_major'       : { 'type' :  'number', 'default' :      1                                                           },
-      'count_minor'       : { 'type' :  'number', 'default' :      1                                                           }
+      'count_major'       : { 'type' :  'number', 'default' :      1                                            },
+      'count_minor'       : { 'type' :  'number', 'default' :      1                                            }
     }, 'required' : [] },
     # trace spec. specific fields: kernel = aead     
     'trace_spec_specific_aead'     : { 'type' :  'object', 'default' : {}, 'properties' : {
