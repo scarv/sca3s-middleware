@@ -24,20 +24,20 @@ MANIFEST_REQ = {
   'definitions' : {
     # trace spec.  generic fields
     'trace_spec_generic'           : { 'type' :  'object', 'default' : {}, 'properties' : {
-      'resolution_id'     : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'user', 'auto', 'max', 'min' ] },
-      'resolution_spec'   : { 'type' :  'number'                                                                },
-        'duration_id'     : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'user', 'auto'               ] },
-        'duration_spec'   : { 'type' :  'number'                                                                },
-        'interval_id'     : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'user', 'auto'               ] },
-        'interval_spec'   : { 'type' :  'number'                                                                },
+      'resolution_id'    : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'user', 'auto', 'max', 'min' ] },
+      'resolution_spec'  : { 'type' :  'number'                                                                },
+        'duration_id'    : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'user', 'auto'               ] },
+        'duration_spec'  : { 'type' :  'number'                                                                },
+        'interval_id'    : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'user', 'auto'               ] },
+        'interval_spec'  : { 'type' :  'number'                                                                },
 
-       'calibrate_trials' : { 'type' :  'number', 'default' :     10                                            },
-       'calibrate_margin' : { 'type' :  'number', 'default' :     10                                            },
+      'calibrate_trials' : { 'type' :  'number', 'default' : 10                                                },
+      'calibrate_margin' : { 'type' :  'number', 'default' : 10                                                },
 
-      'type'              : { 'type' :  'string', 'default' :  '<f8', 'enum' : [ '<f4', '<f8' ]                 },
+      'dtype'            : { 'type' :  'string', 'default' :  '<f8', 'enum' : [ '<f4', '<f8' ]                 },
 
-      'count_major'       : { 'type' :  'number', 'default' :      1                                            },
-      'count_minor'       : { 'type' :  'number', 'default' :      1                                            }
+      'count_major'      : { 'type' :  'number', 'default' :  1                                                },
+      'count_minor'      : { 'type' :  'number', 'default' :  1                                                }
     }, 'required' : [] },
     # trace spec. specific fields: kernel = aead     
     'trace_spec_specific_aead'     : { 'type' :  'object', 'default' : {}, 'properties' : {
@@ -46,7 +46,7 @@ MANIFEST_REQ = {
                                                                                    'data/a',  'data/usedof_a', 
                                                                                    'data/m',  'data/usedof_m', 
                                                                                    'data/c',  'data/usedof_c'  ], 'items' : {
-        'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'data/k',  'data/usedof_k', 
+         'enum' : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'data/k',  'data/usedof_k', 
                                                                                                                                            'data/n',  'data/usedof_n', 
                                                                                                                                            'data/a',  'data/usedof_a', 
                                                                                                                                            'data/m',  'data/usedof_m', 
@@ -58,7 +58,7 @@ MANIFEST_REQ = {
       'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'data/k',  'data/usedof_k',
                                                                                    'data/m',  'data/usedof_m', 
                                                                                    'data/c',  'data/usedof_c'  ], 'items' : {
-        'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'data/k',  'data/usedof_k',
+         'enum' : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'data/k',  'data/usedof_k',
                                                                                                                                            'data/m',  'data/usedof_m', 
                                                                                                                                            'data/c',  'data/usedof_c'  ]
       } }
@@ -67,7 +67,7 @@ MANIFEST_REQ = {
     'trace_spec_specific_function' : { 'type' :  'object', 'default' : {}, 'properties' : {
       'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'data/x0', 'data/usedof_x0', 
                                                                                    'data/r0', 'data/usedof_r0' ], 'items' : {
-        'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'data/x0', 'data/usedof_x0', 
+         'enum' : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'data/x0', 'data/usedof_x0', 
                                                                                                                                            'data/x1', 'data/usedof_x1', 
                                                                                                                                            'data/x2', 'data/usedof_x2', 
                                                                                                                                            'data/x3', 'data/usedof_x3', 
@@ -89,7 +89,7 @@ MANIFEST_REQ = {
     'trace_spec_specific_hash'     : { 'type' :  'object', 'default' : {}, 'properties' : {
       'content' : { 'type' : 'array', 'default' : [ 'trace/signal', 'crop/signal', 'data/m',  'data/usedof_m', 
                                                                                    'data/d',  'data/usedof_d'  ], 'items' : {
-        'enum'  : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'data/m',  'data/usedof_m', 
+         'enum' : [ 'trace/trigger', 'trace/signal', 'crop/trigger', 'crop/signal', 'perf/cycle', 'perf/duration', 'tvla/lhs', 'tvla/rhs', 'data/m',  'data/usedof_m', 
                                                                                                                                            'data/d',  'data/usedof_d'  ]
       } }
     } }
@@ -251,7 +251,7 @@ MANIFEST_REQ = {
       'type' : 'object', 'default' : {}, 'properties' : {
           'depo_id'   : { 'enum' : [ 'null' ] },
           'depo_spec' : { 'type' : 'object', 'default' : {}, 'properties' : {
-            'foo' : { 'type' : 'string', 'default' : 'bar' }
+
         }, 'required' : [] }
       }
     } ] 
