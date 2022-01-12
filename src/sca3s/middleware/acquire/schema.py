@@ -26,10 +26,10 @@ MANIFEST_REQ = {
     'trace_spec_generic'           : { 'type' :  'object', 'default' : {}, 'properties' : {
       'resolution_id'    : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'user', 'auto', 'max', 'min' ] },
       'resolution_spec'  : { 'type' :  'number'                                                                },
-        'duration_id'    : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'user', 'auto'               ] },
-        'duration_spec'  : { 'type' :  'number'                                                                },
-        'interval_id'    : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'user', 'auto'               ] },
-        'interval_spec'  : { 'type' :  'number'                                                                },
+      'duration_id'    : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'user', 'auto'               ] },
+      'duration_spec'  : { 'type' :  'number'                                                                },
+      'interval_id'    : { 'type' :  'string', 'default' : 'auto', 'enum' : [ 'user', 'auto'               ] },
+      'interval_spec'  : { 'type' :  'number'                                                                },
 
       'calibrate_trials' : { 'type' :  'number', 'default' : 10                                                },
       'calibrate_margin' : { 'type' :  'number', 'default' : 10                                                },
